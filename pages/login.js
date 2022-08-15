@@ -48,7 +48,6 @@ const LoginInput = styled(Input)`
 `;
 
 const LoginInputPassword = styled(Input.Password)`
-  margin-bottom: 2vh;
   border-bottom: 1px solid lightgray;
   &:hover,
   &:focus {
