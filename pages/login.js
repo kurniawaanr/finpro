@@ -1,9 +1,11 @@
+import { Fragment } from "react";
+
 import Image from "next/image";
 
 import styled from "styled-components";
 
 import "antd/dist/antd.css";
-import { Card, Input, Button, Typography, Form } from "antd";
+import { Card, Input, Button, Typography, Form, Checkbox } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 //Extending ANTD import
@@ -54,6 +56,10 @@ const LoginInputPassword = styled(Input.Password)`
   }
 `;
 
+const ForgetPasswordDiv = styled.div`
+  text-align: center;
+`;
+
 function Login() {
   const onFinish = (values) => {
     console.log("Success:", values);
@@ -64,8 +70,12 @@ function Login() {
     alert("Failed:", errorInfo);
   };
 
+  const forgetPasswordHandler = () => {
+      console.log("Forget Password");
+  }
+
   return (
-    <>
+    <Fragment>
       <WebsiteHead
         title="Login to SC SIM"
         desc="Login page to enter Startup Campus Sistem Informasi"
@@ -85,11 +95,27 @@ function Login() {
             onFinishFailed={onFinishFailed}
           >
             Username
-            <Form.Item name="username">
+            <Form.Item
+              name="username"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your username!",
+                },
+              ]}
+            >
               <LoginInput placeholder="Type your username" bordered={false} />
             </Form.Item>
             Password
-            <Form.Item name="password">
+            <Form.Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
               <LoginInputPassword
                 placeholder="Type your password"
                 bordered={false}
@@ -98,15 +124,21 @@ function Login() {
                 }
               />
             </Form.Item>
+            <Form.Item name="remember" valuePropName="checked">
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
             <Form.Item>
               <Button type="primary" shape="round" block htmlType="submit">
                 Login
               </Button>
+              <ForgetPasswordDiv>
+                <a onClick={forgetPasswordHandler}>Forget Password?</a>
+              </ForgetPasswordDiv>
             </Form.Item>
           </LoginForm>
         </LoginCard>
       </Background>
-    </>
+    </Fragment>
   );
 }
 
