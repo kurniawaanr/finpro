@@ -1,4 +1,8 @@
 import "../styles/globals.css";
+import "antd/dist/antd.css"; 
+
+import '../components/admins/AdminNavbar.css';
+import '../components/admins/AdminMenubar.css';
 
 import { Provider } from "react-redux";
 

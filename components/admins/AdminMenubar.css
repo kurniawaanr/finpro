@@ -1,0 +1,11 @@
+#MenuBarMenu .ant-menu-submenu-arrow{
+    color: black;
+}
+
+#MenuBarMenu .ant-menu-submenu-title:hover, 
+#MenuBarMenu .ant-menu-submenu-open, 
+#MenuBarMenu .ant-menu-submenu-selected,
+#MenuBarMenu .ant-menu-submenu-selected::after{
+    color: black;
+    border-bottom: none;
+}

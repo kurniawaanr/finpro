@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 
 import styled from "styled-components";
 
-import "antd/dist/antd.css";
 import { Card, Input, Button, Typography, Form, Checkbox } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
