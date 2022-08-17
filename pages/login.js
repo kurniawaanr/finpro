@@ -1,6 +1,7 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useCallback } from "react";
 
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import styled from "styled-components";
 
@@ -8,11 +9,15 @@ import "antd/dist/antd.css";
 import { Card, Input, Button, Typography, Form, Checkbox } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
+//Import Redux
+import { useDispatch, useSelector } from "react-redux";
+import { selectIsLoggedIn, loginHandler } from "../store/features/userReducer";
+
 //Extending ANTD import
 const { Title } = Typography;
 
 //Import Components
-import WebsiteHead from "../components/websiteHead";
+import WebsiteHead from "../components/WebsiteHead";
 
 //Styling Components
 const Background = styled.div`
@@ -60,18 +65,28 @@ const ForgetPasswordDiv = styled.div`
 `;
 
 function Login() {
-  const onFinish = (values) => {
-    console.log("Success:", values);
-  };
+  const dispatch = useDispatch();
+  const selector = useSelector;
+  const router = useRouter();
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-    alert("Failed:", errorInfo);
+  const isUserLoggedIn = selector(selectIsLoggedIn);
+
+  //useEffect if the user already login or not - if remember me so get from localstorage
+  useEffect(()=>{
+    if(isUserLoggedIn){
+      router.push('/admin');
+    }
+  });
+
+  const onFinish = (values) => { 
+    console.log("Success:", values);
+    dispatch(loginHandler({ username: values.username, remember: values.remember }));
+    router.push('/admin');
   };
 
   const forgetPasswordHandler = () => {
-      console.log("Forget Password");
-  }
+    console.log("Forget Password");
+  };
 
   return (
     <Fragment>
@@ -88,11 +103,7 @@ function Login() {
             height={47}
           />
           <Title level={4}>Login to MIS</Title>
-          <LoginForm
-            name="login form"
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-          >
+          <LoginForm name="login form" onFinish={onFinish}>
             Username
             <Form.Item
               name="username"
