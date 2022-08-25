@@ -18,7 +18,9 @@ function AdminHomepage(){
         }
     });
     
-    return <AdminLayout />;
+    return <AdminLayout
+        title = "Homepage"
+     />;
 }
 
 export default AdminHomepage;

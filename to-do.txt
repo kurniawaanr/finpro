@@ -1,0 +1,11 @@
+Admin:
+Susun Table (DONE)
+Susun Form
+Susun edit dan delete dari form
+Fix URL (check untuk category) dan logout
+
+Normal:
+buat header
+buat footer
+buat content
+- Shopping cart

@@ -1,7 +1,5 @@
 import { Fragment } from "react";
 
-import Image from "next/image";
-
 import styled from "styled-components";
 
 import { Menu } from "antd";
@@ -16,11 +14,11 @@ const NavbarBackground = styled.div`
   position: absolute;
   padding: 13px 15px;
   top: 0;
-  background-color: mediumblue;
+  background-color: darkblue;
   color: white;
   width: 100vw;
-  height: 60px;
-  box-shadow: 0 8px 8px -4px gray;
+  height: 9vh;
+  box-shadow: 0 8px 8px -4px #0000000f;
 `;
 
 const LeftNavbar = styled.div`

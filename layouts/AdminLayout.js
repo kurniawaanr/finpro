@@ -3,8 +3,9 @@ import { Fragment } from "react";
 import WebsiteHead from "../components/WebsiteHead";
 import AdminNavbar from "../components/admins/AdminNavbar";
 import AdminMenubar from "../components/admins/AdminMenubar";
+import AdminContent from "../components/admins/AdminContent";
 
-function AdminLayout() {
+function AdminLayout(props) {
   return (
     <Fragment>
       <WebsiteHead
@@ -14,6 +15,7 @@ function AdminLayout() {
 
       <AdminNavbar />
       <AdminMenubar />
+      <AdminContent {...props} />
     </Fragment>
   );
 }

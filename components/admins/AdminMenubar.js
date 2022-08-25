@@ -1,78 +1,37 @@
 import { Fragment } from "react";
 
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import { Menu } from "antd";
-import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
 
 import styled from "styled-components";
+
+import { menubarItems } from "../../SystemConfig";
 
 //Styling components
 const MenubarBackground = styled.div`
   position: absolute;
   top: 0;
-  width: 256px;
-  background-color: darkgray;
+  width: 16vw;
+  background-color: rgb(248, 248, 248);
   height: 100vh;
   color: white;
   padding-top: 15px;
-  box-shadow: 8px 0 8px -4px lightslategray;
+  box-shadow: inset -4px 0px 4px #0000000f;
 `;
 
 const ImageBox = styled.div`
   margin-left: 2vw;
 `;
 
-function getItem(label, key, icon, children, type) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  };
-}
-
-const menubarItems = [
-  getItem("Navigation One", "sub1", <MailOutlined />, [
-    getItem(
-      "Item 1",
-      "g1",
-      null,
-      [getItem("Option 1", "1"), getItem("Option 2", "2")],
-      "group"
-    ),
-    getItem(
-      "Item 2",
-      "g2",
-      null,
-      [getItem("Option 3", "3"), getItem("Option 4", "4")],
-      "group"
-    ),
-  ]),
-  getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
-    getItem("Option 5", "5"),
-    getItem("Option 6", "6"),
-    getItem("Submenu", "sub3", null, [
-      getItem("Option 7", "7"),
-      getItem("Option 8", "8"),
-    ]),
-  ]),
-  getItem("Navigation Three", "sub4", <SettingOutlined />, [
-    getItem("Option 9", "9"),
-    getItem("Option 10", "10"),
-    getItem("Option 11", "11"),
-    getItem("Option 12", "12"),
-  ]),
-];
-
 function AdminMenubar() {
+  const router = useRouter();
+
   const onClick = (e) => {
-    console.log("click ", e);
+    console.log("click ", e.key);
+    const url = "/admin" + (e.key == "home" ? "" : ("/"+e.key));
+    router.push(url);
   };
 
   return (
@@ -92,7 +51,7 @@ function AdminMenubar() {
           mode="inline"
           items={menubarItems}
           style={{
-              backgroundColor: "darkgray",
+              backgroundColor: "rgb(248, 248, 248)",
               marginTop: "5vh"
           }}
         />
