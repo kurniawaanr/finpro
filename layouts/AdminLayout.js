@@ -12,7 +12,6 @@ function AdminLayout(props) {
         title="Startup Campus Admin Site"
         desc="Admin system of Startup Campus"
       />
-
       <AdminNavbar />
       <AdminMenubar />
       <AdminContent {...props} />

@@ -6,6 +6,9 @@ import { PlusOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import AdminTable from "../general/AdminTable";
 
+import Link from 'next/link';
+import { useRouter } from "next/router";
+
 //Styling components
 const ContentBackground = styled.div`
   position: absolute;
@@ -31,6 +34,8 @@ const MainColumn = styled.div`
 `;
 
 function AdminContent(props) {
+  const router = useRouter();
+
   return (
     <ContentBackground>
       <div>
@@ -39,16 +44,18 @@ function AdminContent(props) {
         </LeftColumn>
         <RightColumn>
           {props.addButton && (
-            <Button
-              style={{
-                border: "3px solid darkblue",
-                padding: "3px 5px",
-                borderRadius: "7px",
-              }}
-              icon={<PlusOutlined />}
-            >
-              Add New {props.singleWord}
-            </Button>
+            <Link href={`${router.route}/add`}>
+              <Button
+                style={{
+                  border: "3px solid darkblue",
+                  padding: "3px 5px",
+                  borderRadius: "7px",
+                }}
+                icon={<PlusOutlined />}
+              >
+                Add New {props.singleWord}
+              </Button>
+            </Link>
           )}
         </RightColumn>
       </div>

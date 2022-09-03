@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { useRouter } from "next/router";
 
 import styled from "styled-components";
 
@@ -8,6 +9,10 @@ import {
   SettingOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
+
+//Import Redux
+import { useDispatch } from "react-redux";
+import { logoutHandler } from "../../store/features/userReducer";
 
 //Styling components
 const NavbarBackground = styled.div`
@@ -64,8 +69,15 @@ const navbarItems = [
 ];
 
 function AdminNavbar() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const onClick = (e) => {
     console.log("click ", e);
+    if(e.key == "logout"){
+      dispatch(logoutHandler());
+      router.push('/login');
+    }
   };
 
   return (

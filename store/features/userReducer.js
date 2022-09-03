@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useRouter } from "next/router";
+import { setCookie, deleteCookie, hasCookie, getCookie } from 'cookies-next';
 
 const initialState = {
-  username: null,
-  isLoggedIn: false,
+  username: hasCookie('username') ? getCookie('username') : null,
+  isLoggedIn: hasCookie('isLoggedIn') ? getCookie('isLoggedIn') : false,
 };
 
 const userReducer = createSlice({
@@ -13,11 +13,14 @@ const userReducer = createSlice({
     loginHandler: (state, action) => {
       state.username = action.username;
       state.isLoggedIn = true;
+      setCookie('isLoggedIn',true);
+      setCookie('username',action.username);
     },
     logoutHandler: (state) => {
       state.username = null;
       state.isLoggedIn = false;
-      useRouter().push('/login');
+      deleteCookie('isLoggedIn');
+      deleteCookie('username');
     },
   },
 });

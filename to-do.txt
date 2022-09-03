@@ -1,7 +1,9 @@
 Admin:
 Susun Table (DONE)
-Susun Form
-Susun edit dan delete dari form
+Susun Form (DONE)
+Susun edit dan delete dari form (DONE)
+coba edit Form (DONE)
+FIX URL Logout (DONE)
 Fix URL (check untuk category) dan logout
 
 Normal:
