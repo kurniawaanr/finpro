@@ -49,7 +49,7 @@ const SearchGroup = styled(Input.Group)`
   display: inline-block !important;
   width: 50vw;
   position: relative;
-  top: -2vh;
+  top: -3vh;
 `;
 
 const SearchInput = styled(Input.Search)`
