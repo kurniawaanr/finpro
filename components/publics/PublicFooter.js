@@ -136,7 +136,7 @@ function PublicFooter() {
                         Address -- 123 Street Road, South <br />
                         Jakarta, DKI Jakarta, Indonesia
                     </p>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8096018.701773022!2d101.41263544999995!3d-7.775598899999991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a59f8aaddadb7%3A0xdc6b1bc588b24967!2sMSIB%20Kampus%20Merdeka%20Corner!5e0!3m2!1sen!2sde!4v1662321513925!5m2!1sen!2sde" width="200" height="150" style={{border:0}} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8096018.701773022!2d101.41263544999995!3d-7.775598899999991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a59f8aaddadb7%3A0xdc6b1bc588b24967!2sMSIB%20Kampus%20Merdeka%20Corner!5e0!3m2!1sen!2sde!4v1662321513925!5m2!1sen!2sde" width="200" height="150" style={{border:0}} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </RightFooter>
             </FooterBackground>
         </Fragment>
