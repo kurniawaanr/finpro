@@ -143,7 +143,7 @@ function AdminFormContent(props) {
                 <Form.Item {...attrs}>
                     <Select placeholder={`Please choose ${linkName} ${formItem[1]}`}>
                         {formItem[4].map(item => {
-                            return (<Option value={item}>{capitalizeFirstLetter(item)}</Option>)
+                            return (<Option key={item} value={item}>{capitalizeFirstLetter(item)}</Option>)
                         })}
                     </Select>
                 </Form.Item>);

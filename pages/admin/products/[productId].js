@@ -18,7 +18,7 @@ function AdminProductForm() {
         }
     });
 
-    console.log(router.query.productId);
+    //console.log(router.query.productId);
 
     return (
         <AdminFormLayout />
