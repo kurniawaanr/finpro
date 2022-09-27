@@ -24,7 +24,7 @@ const WishlistShowcaseCol = styled(Col)`
     margin-bottom: 2vh;
 `;
 
-function wishlistPage() {
+function WishlistPage() {
     const dispatch = useDispatch();
     const selector = useSelector;
     var wishlistsList = selector(wishlistItems);
@@ -66,4 +66,4 @@ function wishlistPage() {
     );
 }
 
-export default wishlistPage;
+export default WishlistPage;

@@ -78,14 +78,14 @@ const PriceTitle = styled(Col)`
     font-weight: bold;
 `;
 
-function checkout() {
-    const dispatch = useDispatch();
+function Checkout() {
+    const dispatch = useDispatch;
     const selector = useSelector;
     const cartArr = selector(cartItems);
 
-    const [shippingName, setShippingName] = useState('');
-    const [shippingPhone, setShippingPhone] = useState('');
-    const [shippingAddress, setShippingAddress] = useState('');
+    const [shippingName, setShippingName] = useState("");
+    const [shippingPhone, setShippingPhone] = useState("");
+    const [shippingAddress, setShippingAddress] = useState("");
 
     const [products, setProducts] = useState([]);
 
@@ -188,7 +188,7 @@ function checkout() {
                                 <Fragment>
                                     {products.map((item) => {
                                         return (
-                                            <Fragment>
+                                            <Fragment key={`FragmentCheckout${item.itemId}`}>
                                                 <Col className="gutter-row" span={16}>
                                                     <IndividualCartItem
                                                         picture={item.picture}
@@ -225,7 +225,7 @@ function checkout() {
                                             onChange={shippingMethodChangeHandler}
                                         >
                                             {shippingMethods.map(item =>{
-                                                return <Option value={item.price}>{item.name}</Option>
+                                                return <Option key={`ShippingMethodOption${item.name}`} value={item.price}>{item.name}</Option>
                                             })}
                                         </Select>
                                     </Col>
@@ -312,4 +312,4 @@ function checkout() {
     );
 }
 
-export default checkout;
+export default Checkout;

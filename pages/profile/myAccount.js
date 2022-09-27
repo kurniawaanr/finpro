@@ -23,7 +23,7 @@ const layout = {
     },
 };
 
-function myAccountPage() {
+function MyAccountPage() {
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
     const [shippingName, setShippingName] = useState("");
@@ -100,4 +100,4 @@ function myAccountPage() {
     );
 }
 
-export default myAccountPage;
+export default MyAccountPage;
