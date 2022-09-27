@@ -14,7 +14,7 @@ function AdminProductForm() {
 
     useEffect(() => {
         if (!isUserLoggedIn) {
-            router.push("/login");
+            router.push("/adminLogin");
         }
     });
 

@@ -63,7 +63,7 @@ const ForgetPasswordDiv = styled.div`
   text-align: center;
 `;
 
-function Login() {
+function AdminLogin() {
   const dispatch = useDispatch();
   const selector = useSelector;
   const router = useRouter();
@@ -151,4 +151,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default AdminLogin;

@@ -11,10 +11,10 @@ const userReducer = createSlice({
   initialState,
   reducers: {
     loginHandler: (state, action) => {
-      state.username = action.username;
+      state.username = action.payload.username;
       state.isLoggedIn = true;
       setCookie('isLoggedIn',true);
-      setCookie('username',action.username);
+      setCookie('username',action.payload.username);
     },
     logoutHandler: (state) => {
       state.username = null;

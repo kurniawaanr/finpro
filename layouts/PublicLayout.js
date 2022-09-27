@@ -11,6 +11,7 @@ import WebsiteHead from "../components/WebsiteHead";
 //Styling components
 const PublicBox = styled.div`
   overflow-x: hidden;
+  max-width: 100vw;
 `;
 
 function PublicLayout(props) {
@@ -22,7 +23,9 @@ function PublicLayout(props) {
       />
       <PublicBox>
         <PublicNavbar />
-        <PublicContent />
+        <PublicContent>
+          {props.children}
+        </PublicContent>
         <PublicFooter />
       </PublicBox>
     </Fragment>

@@ -14,7 +14,7 @@ function AdminHomepage(){
 
     useEffect(()=>{
         if(!isUserLoggedIn){
-            router.push('/login');
+            router.push('/adminLogin');
         }
     });
     

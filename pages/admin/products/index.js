@@ -127,7 +127,7 @@ function AdminProducts() {
 
   useEffect(() => {
     if (!isUserLoggedIn) {
-      router.push("/login");
+      router.push("/adminLogin");
     }
   });
 

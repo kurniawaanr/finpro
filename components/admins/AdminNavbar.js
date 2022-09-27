@@ -76,7 +76,7 @@ function AdminNavbar() {
     console.log("click ", e);
     if(e.key == "logout"){
       dispatch(logoutHandler());
-      router.push('/login');
+      router.push('/adminLogin');
     }
   };
 

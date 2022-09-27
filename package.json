@@ -12,6 +12,7 @@
     "@ant-design/icons": "^4.7.0",
     "@reduxjs/toolkit": "^1.8.4",
     "antd": "^4.22.5",
+    "antd-mask-input": "^2.0.7",
     "cookies-next": "^2.1.1",
     "lodash": "^4.17.21",
     "next": "12.2.5",

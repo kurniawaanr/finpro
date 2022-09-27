@@ -1,22 +1,25 @@
-import { Fragment } from "react";
+import { Fragment, useRef } from "react";
 
+import { useRouter } from "next/router";
 import Image from "next/image";
+import Link from 'next/link';
 
 import styled from "styled-components";
 
-import { Input, Button } from "antd";
+import { Input, Button, Popover } from "antd";
 import { UserOutlined, HeartOutlined, ShoppingCartOutlined, UploadOutlined } from "@ant-design/icons";
 
 //Styling components
 const NavbarBackground = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   padding: 2vh 1vw;
   background-color: darkgray;
   color: black;
-  width: 100vw;
+  width: 100%;
   height: 9vh;
   box-shadow: 0 8px 8px -4px #0000000f;
+  z-index: 10;
 `;
 
 const LeftNavbar = styled.div`
@@ -59,7 +62,23 @@ const SearchInput = styled(Input.Search)`
   height: 5vh;
 `;
 
-function PublicNavbar() {
+const UploadPopover = styled(Popover)`
+  background-color: gray;
+`;
+
+function PublicNavbar(e) {
+  const router = useRouter();
+  const searchTermInput = useRef("");
+
+  const onSearchHandler = () => {
+    const searchTermInputValue = searchTermInput.current.input.value;
+    const encodedParams = searchTermInputValue != "" ? encodeURIComponent(searchTermInputValue) : "";
+
+    router.push({
+      pathname: "/product",
+      query: {search: encodedParams}});
+  }
+
   return (
     <Fragment>
       <NavbarBackground>
@@ -81,13 +100,18 @@ function PublicNavbar() {
           <SearchGroup compact>
             <SearchInput
               placeholder="Search / upload your picture"
+              ref={searchTermInput}
+              onPressEnter={onSearchHandler}
+              onSearch={onSearchHandler}
             />
-            <Button icon={<UploadOutlined />} />
+            <UploadPopover placement="bottomRight" content="Test content" trigger="click">
+              <Button icon={<UploadOutlined />} />
+            </UploadPopover>
           </SearchGroup>
         </LeftNavbar>
         <RightNavbar>
           <UserOutlined style={{ paddingTop: "1vh", marginRight: "1vw" }} />
-          <HeartOutlined style={{ paddingTop: "1vh", marginRight: "1vw" }} />
+          <Link href={`/profile/wishlist`}><HeartOutlined style={{ paddingTop: "1vh", marginRight: "1vw" }} /></Link>
           <ShoppingCartOutlined style={{ paddingTop: "1vh" }} />
         </RightNavbar>
       </NavbarBackground>

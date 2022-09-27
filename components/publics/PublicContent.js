@@ -9,10 +9,12 @@ const ContentBackground = styled.div`
   padding: 3vh 1vw;
 `;
 
-function PublicContent() {
+function PublicContent(props) {
     return (
         <Fragment>
-            <ContentBackground>Test Content</ContentBackground>
+            <ContentBackground>
+                {props.children}
+            </ContentBackground>
         </Fragment>
     );
 }

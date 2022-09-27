@@ -1,13 +1,27 @@
-Admin:
-Susun Table (DONE)
-Susun Form (DONE)
-Susun edit dan delete dari form (DONE)
-coba edit Form (DONE)
-FIX URL Logout (DONE)
-Fix URL (check untuk category) dan logout
+Todo:
+- Homepage (DONE)
+- My Profile (DONE)
+- Product Detail (DONE)
+- Products page (DONE)
+- favorites (Concept) (DONE)
+- Wishlist Page (id barang) (DONE)
+- Shopping cart (concept) (DONE)
+- Checkout Page (Id barang dan qty) (DONE)
 
-Normal:
-buat header
-buat footer
-buat content
-- Shopping cart
+IMPORTANT:
+- Product page with picture
+- Order page
+
+- Signup dan signin user
+- Admin Homepage (Penjual dan pembeli)
+- Order Detail page (Admin)
+
+Secondary:
+- Ganti warna
+- Ganti Logo 
+- Logo kirim ke halaman index
+- GMAPS untuk koordinat
+
+
+History:
+tgl 27 jam 12 mlm sampai jam 1 - buat laporan
