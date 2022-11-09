@@ -166,7 +166,7 @@ function PublicNavbar(e) {
             */}
             {categoriesNavbar.map(category => {
               return (
-                <CategoryLink href={`/product?cat=${category.id}`} target="_blank">{category.title}</CategoryLink>
+                <CategoryLink key={"CategoryNavbar"+category.id} href={`/product?cat=${category.id}`} target="_blank">{category.title}</CategoryLink>
               )
             })}
           </CategoriesBar>

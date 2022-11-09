@@ -92,7 +92,7 @@ function PublicFooter() {
                     </Link>
                     <ChannelsBox>
                         <Title level={4}>Our Channels</Title>
-                        <a href="https://www.instagram.com/startupcampus.id/" target="_blank">
+                        <a href="https://www.instagram.com/startupcampus.id/" target="_blank" rel="noreferrer">
                             <ChannelIcon>
                                 <Image
                                     src="/images/icons/instagram.png"
@@ -102,7 +102,7 @@ function PublicFooter() {
                                 />
                             </ChannelIcon>
                         </a>
-                        <a href="https://www.linkedin.com/company/startupcampusid/" target="_blank">
+                        <a href="https://www.linkedin.com/company/startupcampusid/" target="_blank" rel="noreferrer">
                             <ChannelIcon>
                                 <Image
                                     src="/images/icons/linkedin.png"
@@ -112,7 +112,7 @@ function PublicFooter() {
                                 />
                             </ChannelIcon>
                         </a>
-                        <a href="https://www.youtube.com/channel/UCbVbOn_GRQXbIHUA6NP9t3w" target="_blank">
+                        <a href="https://www.youtube.com/channel/UCbVbOn_GRQXbIHUA6NP9t3w" target="_blank" rel="noreferrer">
                             <ChannelIcon>
                                 <Image
                                     src="/images/icons/youtube.png"

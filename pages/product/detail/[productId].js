@@ -157,9 +157,9 @@ function DetailProductPage() {
                 <Col className="gutter-row" span={8}>
                     <ProductDetailCarousel>
                         <Carousel autoplay>
-                            {productPictures.map(pPicture => {
+                            {productPictures.map(pPicture, index => {
                                 return (
-                                    <div>
+                                    <div key={"ProductDetailPics"+index}>
                                         <ProductDetailPicture src={EndPoint + pPicture} />
                                     </div>
                                 );
@@ -187,7 +187,7 @@ function DetailProductPage() {
                     {
                         sizeOptions.map(sOpt => {
                             return (
-                                <ItemSizeRadio className="sizeOptions" id={"size" + sOpt} onClick={(e) => {
+                                <ItemSizeRadio className="sizeOptions" key={"size" + sOpt} id={"size" + sOpt} onClick={(e) => {
                                     setItemSize(sOpt);
                                     document.querySelectorAll(".sizeOptions").forEach(el => { el.classList.remove("selected") });
                                     document.getElementById("size" + sOpt).classList.add("selected");

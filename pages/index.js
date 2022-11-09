@@ -53,7 +53,7 @@ function Home() {
 
         {homeBanners.map(banner => {
           return (
-            <div>
+            <div key={"CarouselPicture"+banner.id}>
               <CarouselPicture src={EndPoint + banner.image} alt={banner.title} key={banner.id} />
             </div>
           )

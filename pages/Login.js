@@ -172,7 +172,7 @@ function Login() {
                 Login
               </LoginButton>
             </Form.Item>
-            <SignupText>If you don't have an account. Please click here to <Link href={'/Signup'}>sign up</Link></SignupText>
+            <SignupText>If you don&apos;t have an account. Please click here to <Link href={'/Signup'}>sign up</Link></SignupText>
           </LoginForm>
         </LoginCard>
       </Background>
