@@ -157,9 +157,9 @@ function DetailProductPage() {
                 <Col className="gutter-row" span={8}>
                     <ProductDetailCarousel>
                         <Carousel autoplay>
-                            {productPictures.map(pPicture, index => {
+                            {productPictures.map( pPicture => {
                                 return (
-                                    <div key={"ProductDetailPics"+index}>
+                                    <div key={"ProductDetailPics"+pPicture}>
                                         <ProductDetailPicture src={EndPoint + pPicture} />
                                     </div>
                                 );
