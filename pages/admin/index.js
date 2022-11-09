@@ -1,26 +1,40 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-//Import Redux
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../../store/features/userReducer";
+import { Card, Typography } from "antd";
+import { getCookie } from 'cookies-next';
+
+import { EndPoint, TotalSales } from "../../SystemApis";
 
 import AdminLayout from "../../layouts/AdminLayout";
 
-function AdminHomepage(){
-    const router = useRouter();
-    const selector = useSelector;
-    const isUserLoggedIn = selector(selectIsLoggedIn);
+const { Title } = Typography;
 
-    useEffect(()=>{
-        if(!isUserLoggedIn){
-            router.push('/adminLogin');
-        }
-    });
-    
-    return <AdminLayout
-        title = "Homepage"
-     />;
+function AdminHomepage() {
+    const router = useRouter();
+    const [salesTotal, setSalesTotal] = useState(0);
+
+    useEffect(() => {
+        fetch(EndPoint + TotalSales, {
+            headers: {
+                'Authentication': getCookie("adminToken")
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setSalesTotal(data.data.total);
+            });
+    }, []);
+
+    return (
+        <AdminLayout
+            title="Homepage">
+            <Card style={{textAlign: "center"}}>
+                <Title level={2}>Your Total Sales</Title>
+                <Title level={1}>{salesTotal}</Title>
+            </Card>
+        </AdminLayout>
+    );
 }
 
 export default AdminHomepage;

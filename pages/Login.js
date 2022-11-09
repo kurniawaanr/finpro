@@ -8,14 +8,7 @@ import Link from 'next/link';
 import styled from "styled-components";
 import { EndPoint, SignIn } from "../SystemApis";
 
-import {
-  Card,
-  Input,
-  Button,
-  Typography,
-  Form,
-  notification
-} from "antd";
+import { Card, Input, Button, Typography, Form, notification } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 //Extending ANTD import
@@ -38,7 +31,7 @@ const LoginCard = styled(Card)`
   padding: 10px;
 
   width: 20vw;
-  height: 30vw;
+  height: 32vw;
   border-radius: 10px;
   text-align: center;
 `;
@@ -69,27 +62,32 @@ const LoginButton = styled(Button)`
   background-color: #143F5D;
 `;
 
-function AdminLogin() {
+const SignupText = styled.div`
+  padding: 1vh 0;
+  font-weight: 400
+`;
+
+function Login() {
   const router = useRouter();
 
   //useEffect if the user already login or not - if remember me so get from localstorage
-  useEffect(() => {
-    if (hasCookie('adminToken')) {
-      router.push('/admin');
+  useEffect(()=>{
+    if (hasCookie('userToken')) {
+      router.push('/');
     }
   });
 
-  const onFinish = (values) => {
+  const onFinish = (values) => { 
+    //console.log("Success:", values);
     fetch(EndPoint + SignIn, {
       method: "POST",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        email: values.email,
-        password: values.password
-      })
+      body: JSON.stringify({ 
+        email: values.email, 
+        password: values.password })
     })
       .then(response => response.json())
       .then(data => {
@@ -99,29 +97,19 @@ function AdminLogin() {
             message: "Login Failed",
             description: data.message
           })
-        } else if (data.user_information.type != "seller") {
-          notification["error"]({
-            message: "Login Failed",
-            description: "Wrong Login Page! you will be redirected to the right login page in 5 seconds!"
-          })
-
-          setTimeout(function () {
-            router.push('/Login');
-          }, 5000);
-        }
-        else {
+        } else {
           notification["success"]({
             message: "Login Success",
             description: data.message
           });
 
-          setCookie("adminToken", data.token);
-          setCookie("adminEmail", data.user_information.email);
-          setCookie("adminName", data.user_information.name);
-          setCookie("adminPhoneNumber", data.user_information.phone_number);
+          setCookie("userToken", data.token);
+          setCookie("userEmail", data.user_information.email);
+          setCookie("userName", data.user_information.name);
+          setCookie("userPhoneNumber", data.user_information.phone_number);
 
           setTimeout(function () {
-            router.push('/admin');
+            router.push('/');
           }, 5000);
         }
         //setCategoriesNavbar(data.data)
@@ -184,6 +172,7 @@ function AdminLogin() {
                 Login
               </LoginButton>
             </Form.Item>
+            <SignupText>If you don't have an account. Please click here to <Link href={'/Signup'}>sign up</Link></SignupText>
           </LoginForm>
         </LoginCard>
       </Background>
@@ -191,4 +180,4 @@ function AdminLogin() {
   );
 }
 
-export default AdminLogin;
+export default Login;

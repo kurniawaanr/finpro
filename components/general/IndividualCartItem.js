@@ -13,13 +13,15 @@ const { Title } = Typography;
 //Styling components
 const CartPicture = styled.img`
     width: 15vw;
+    margin-bottom: 1vh;
 `;
 
 function IndividualCartItem(props) {
     const dispatch = useDispatch();
 
     const deleteItemHandler = () => {
-        dispatch(removeItemCartHandler({itemId: props.itemId, size: props.size}));
+        //dispatch(removeItemCartHandler({itemId: props.itemId, size: props.size}));
+        props.onDelete(props.itemId)
     }
 
     return (

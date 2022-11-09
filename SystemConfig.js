@@ -2,8 +2,8 @@ import {
   HomeOutlined,
   ShoppingCartOutlined,
   AppstoreOutlined,
-  FlagOutlined,
-  UserOutlined
+  PoweroffOutlined,
+  FundOutlined
 } from "@ant-design/icons";
 
 function getItem(label, key, icon, children, type) {
@@ -16,33 +16,32 @@ function getItem(label, key, icon, children, type) {
   };
 }
 
+//Import and configure API
+
+//Accounts
+export const AUser = "StartupCampus";
+export const APass = "7djIRiCF9O";
+
 //Misc
 export const shippingMethods = [
-  {name: "same day", price: 100000},
-  {name: "tomorrow", price: 50000},
-  {name: "next time", price: 0},
+  {name: "Regular", id: "regular"},
+  {name: "Next Day", id: "tomorrow"}
 ];
 
 //MENU
 export const menubarItems = [
   getItem("Homepage", "home", <HomeOutlined />),
-  getItem("Accounts", "accounts", <UserOutlined />),
-  getItem("Banners", "banners", <FlagOutlined />),
-  getItem("Products", "products", <ShoppingCartOutlined />, [
-    getItem("Products List", "products"),
-    getItem("Product Categories", "productCategories")
-  ]),
-  getItem("Partners", "partners", <AppstoreOutlined />, [
-    getItem("Partners List", "partners"),
-    getItem("Partner Categories", "partnerCategories")
-  ]),
+  getItem("Orders", "orders", <FundOutlined />),
+  getItem("Product", "products", <ShoppingCartOutlined />),
+  getItem("Product Categories", "productCategories", <AppstoreOutlined />),
+  getItem("Logout", "logout", <PoweroffOutlined />),
 ];
 
 export const profileMenuItems = [
   getItem("My Account", "myAccount"),
   getItem("My Orders", "myOrders"),
-  getItem("Order Track", "orderTrack"),
-  getItem("Wishlist", "wishlist"),
+  getItem("My Balances", "myBalances"),
+  getItem("Logout", "logout"),
 ]
 
 //FORM
@@ -65,25 +64,14 @@ export const productFormStructure = [
       required: true,
       message: 'Please choose products category!',
     },
-  ], ["Pakaian Pria", "Pakaian Wanita", "Pakaian Anak"]],
-  ["Brand", "brand", "selectBox", [
-    {
-      required: true,
-      message: 'Please choose products brand!',
-    },
-  ], ["Boss", "Gucci", "Fossil"]],
+  ], []],
   ["Condition", "condition", "selectBox", [
     {
       required: true,
       message: 'Please choose products condition!',
     },
-  ], ["New", "Used"]],
-  ["Image", "image", "uploadImage", [
-    {
-      required: true,
-      message: 'Please input product image!',
-    },
-  ]]
+  ], ["new", "used"]],
+  ["Image", "image", "uploadImage"]
 ];
 
 export const shippingFormStructure = [
@@ -105,4 +93,19 @@ export const shippingFormStructure = [
       message: 'Please input shipping address!',
     },
   ]],
+  ["City", "city", "text", [
+    {
+      required: true,
+      message: 'Please input shipping city!',
+    },
+  ]],
 ]
+
+export const productCategoryFormStructure = [
+  ["Title", "title", "text", [
+    {
+      required: true,
+      message: 'Please input product category title!',
+    },
+  ]],
+];

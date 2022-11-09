@@ -11,7 +11,7 @@ const CategoryBox = styled.div`
     padding-right: 1vw;
 `;
 
-function CategoryGroup(props) {
+function    CategoryGroup(props) {
     const router = useRouter();
 
     const [checkboxValue, setCheckboxValue] = useState([]);
@@ -22,7 +22,13 @@ function CategoryGroup(props) {
         if (props.type == "checkbox") {
             const paramsArrVal = router.query[props.paramKeyword];
             if (paramsArrVal != undefined) {
-                setCheckboxValue(paramsArrVal);
+                const paramsArrValType = typeof paramsArrVal;
+                if(paramsArrValType == "string" ){
+                    setCheckboxValue([paramsArrVal]);
+                }
+                else{
+                    setCheckboxValue(paramsArrVal);
+                }
             }
         } else if (props.type == "slider") {
             const paramStart = router.query[props.paramKeyword + "Start"];
@@ -36,10 +42,12 @@ function CategoryGroup(props) {
 
     //Methods
     const onChangeCheckboxHandler = e => {
+        //console.log(e);
+        //console.log(checkboxValue);
 
         let items = [];
         if (checkboxValue.length > 0) {
-            items = [...checkboxValue];
+            items = checkboxValue;
         }
 
         if (e.target.checked) {
@@ -47,6 +55,7 @@ function CategoryGroup(props) {
         } else {
             items = items.filter(f => f !== e.target.value)
         }
+        //console.log(items);
         setCheckboxValue(items);
 
         router.query[props.paramKeyword] = items;
@@ -67,10 +76,13 @@ function CategoryGroup(props) {
     //Get the type and set the value
     if (props.type == "checkbox") {
         props.options.map(option => {
-            const checkedVal = (checkboxValue && checkboxValue.includes(option[1].toString())) ? true : false;
+            //console.log(option.id)
+            //console.log(checkboxValue)
+            //console.log(checkboxValue.includes(option.id.toString()))
+            const checkedVal = (checkboxValue && checkboxValue.includes(option.id.toString())) ? true : false;
             formItems.push(
                 <div>
-                    <Checkbox onChange={onChangeCheckboxHandler} value={option[1]} checked={checkedVal}>{option[0]}</Checkbox>
+                    <Checkbox onChange={onChangeCheckboxHandler} value={option.id} checked={checkedVal}>{option.title}</Checkbox>
                 </div>)
         })
     }

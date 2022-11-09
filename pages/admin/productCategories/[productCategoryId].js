@@ -2,17 +2,18 @@ import { useRouter } from "next/router";
 
 import AdminFormLayout from "../../../layouts/AdminFormLayout";
 
-function AdminProductForm() {
+function AdminProductCategoryForm() {
     const router = useRouter();
+
     //console.log(router.query.productId);
 
     return (
         <AdminFormLayout
-            fId={router.query.productId}
-            fType="product"
-            fKey="product"
+            fId={router.query.productCategoryId}
+            fType="product category"
+            fKey="productCategory"
         />
     );
 }
 
-export default AdminProductForm;
+export default AdminProductCategoryForm;

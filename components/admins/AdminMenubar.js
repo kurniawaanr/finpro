@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { deleteCookie } from 'cookies-next';
 
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -11,10 +12,10 @@ import { menubarItems } from "../../SystemConfig";
 
 //Styling components
 const MenubarBackground = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
-  width: 16vw;
-  background-color: rgb(248, 248, 248);
+  width: 14vw;
+  background-color: #143F5D;
   height: 100vh;
   color: white;
   padding-top: 15px;
@@ -22,7 +23,7 @@ const MenubarBackground = styled.div`
 `;
 
 const ImageBox = styled.div`
-  margin-left: 2vw;
+  margin-left: 5vw;
 `;
 
 function AdminMenubar() {
@@ -31,7 +32,12 @@ function AdminMenubar() {
   const onClick = (e) => {
     console.log("click ", e.key);
     const url = "/admin" + (e.key == "home" ? "" : ("/"+e.key));
-    router.push(url);
+    if(e.key == "logout"){
+      deleteCookie("adminToken")
+      router.push("/adminLogin");
+    }else{
+      router.push(url);
+    }
   };
 
   return (
@@ -39,10 +45,10 @@ function AdminMenubar() {
       <MenubarBackground>
         <ImageBox>
           <Image
-            src="/images/Startup-Campus-Site-Logo.png"
-            alt="Startup Campus Logo"
-            width={170}
-            height={40}
+            src="/images/Fashion Campus Logo.png"
+            alt="Fashion Campus Logo"
+            width={60}
+            height={60}
           />
         </ImageBox>
         <Menu
@@ -51,7 +57,7 @@ function AdminMenubar() {
           mode="inline"
           items={menubarItems}
           style={{
-              backgroundColor: "rgb(248, 248, 248)",
+              backgroundColor: "#143F5D",
               marginTop: "5vh"
           }}
         />

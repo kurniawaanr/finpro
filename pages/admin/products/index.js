@@ -1,27 +1,37 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { getCookie } from 'cookies-next';
 
-import { Button } from "antd";
+import { EndPoint, ProductsList } from "../../../SystemApis";
+
+import { Button, notification } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-
-//Import Redux
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../../../store/features/userReducer";
 
 import AdminLayout from "../../../layouts/AdminLayout";
 
 function AdminProducts() {
   const router = useRouter();
-  const selector = useSelector;
-  const isUserLoggedIn = selector(selectIsLoggedIn);
+
+  const [tableData, setTableData] = useState([]);
 
   const deleteHandler = (key) => {
-    console.log(`User with id ${key} is deleted!`);
+    fetch(EndPoint + ProductsList + "/" + key, {
+      method: "DELETE",
+      headers: {
+        'Authentication': getCookie("adminToken")
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        notification.open({
+          description: data.message
+        })
+      });
   }
 
   const editHandler = (key) => {
-    console.log(`User with id ${key} is edited!`)
-    router.push("/admin/products/"+key);
+    //console.log(`User with id ${key} is edited!`)
+    router.push("/admin/products/" + key);
   }
 
   //Table Structures
@@ -29,17 +39,17 @@ function AdminProducts() {
 
   const tableStructure = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      sorter: (a, b) => a.name.localeCompare(b.name),
-      sortOrder: sortedInfo.columnKey === "name" ? sortedInfo.order : null,
-      ellipsis: true,
+      title: "No.",
+      key: "index",
+      render: (text, record, index) => index + 1
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
+      title: "Title",
+      dataIndex: "title",
+      key: "title",
+      sorter: (a, b) => a.title.localeCompare(b.title),
+      sortOrder: sortedInfo.columnKey === "title" ? sortedInfo.order : null,
+      ellipsis: true,
     },
     {
       title: "Price",
@@ -50,34 +60,10 @@ function AdminProducts() {
       ellipsis: true,
     },
     {
-      title: "Category",
-      dataIndex: "category",
-      key: "category",
-      sorter: (a, b) => a.category.localeCompare(b.category),
-      sortOrder: sortedInfo.columnKey === "category" ? sortedInfo.order : null,
-      ellipsis: true,
-    },
-    {
-      title: "Brand",
-      dataIndex: "brand",
-      key: "brand",
-      sorter: (a, b) => a.brand.localeCompare(b.brand),
-      sortOrder: sortedInfo.columnKey === "brand" ? sortedInfo.order : null,
-      ellipsis: true,
-    },
-    {
-      title: "Condition",
-      dataIndex: "condition",
-      key: "condition",
-      sorter: (a, b) => a.condition.localeCompare(b.condition),
-      sortOrder: sortedInfo.columnKey === "condition" ? sortedInfo.order : null,
-      ellipsis: true,
-    },
-    {
       title: "Image",
       dataIndex: "image",
       key: "image",
-      render: (record) => <img src={record} style={{ width: '8vw' }} />
+      render: (record) => <img src={EndPoint+record} style={{ width: '8vw' }} />
     },
     {
       title: "Actions",
@@ -85,51 +71,25 @@ function AdminProducts() {
       key: "actions",
       render: (_, record) => (
         <>
-          <Button type="primary" icon={<EditOutlined />} size={"large"} onClick={() => editHandler(record.key)} />&nbsp;
-          <Button type="danger" icon={<DeleteOutlined />} size={"large"} onClick={() => deleteHandler(record.key)} />
+          <Button type="primary" icon={<EditOutlined />} size={"large"} onClick={() => editHandler(record.id)} />&nbsp;
+          <Button type="danger" icon={<DeleteOutlined />} size={"large"} onClick={() => deleteHandler(record.id)} />
         </>
       )
     }
   ];
 
-  const tableData = [
-    {
-      key: 1,
-      name: 'Ipon',
-      description: 'ya ipon',
-      price: 20000000,
-      category: 'Mobile phone',
-      brand: 'Apple',
-      condition: 'New',
-      image: "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_87346072/fee_786_587_png",
-    },
-    {
-      key: 2,
-      name: 'Ipon 11',
-      description: 'Ipon terbaru log',
-      price: 2000000,
-      category: 'Mobile phone',
-      brand: 'Apple',
-      condition: 'Used',
-      image: "https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_87346072/fee_786_587_png",
-    },
-    {
-      key: 3,
-      name: 'Nokia',
-      description: 'ya nokia',
-      price: 1000,
-      category: 'Mobile phone',
-      brand: 'Nokia',
-      condition: 'Used',
-      image: "https://manual-user-guide.com/images/phones/nokia_6630.png",
-    }
-  ]
-
   useEffect(() => {
-    if (!isUserLoggedIn) {
-      router.push("/adminLogin");
-    }
-  });
+    fetch(EndPoint + ProductsList, {
+      headers: {
+        'Authentication': getCookie("adminToken")
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        //console.log(data.data)
+        setTableData(data.data);
+      });
+  }, []);
 
   return (
     <AdminLayout

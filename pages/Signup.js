@@ -1,21 +1,15 @@
 import { Fragment, useEffect } from "react";
-import { setCookie, hasCookie } from 'cookies-next';
+import { hasCookie } from 'cookies-next';
 
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from 'next/link';
 
 import styled from "styled-components";
-import { EndPoint, SignIn } from "../SystemApis";
 
-import {
-  Card,
-  Input,
-  Button,
-  Typography,
-  Form,
-  notification
-} from "antd";
+import { EndPoint, SignUp } from "../SystemApis";
+
+import { Card, Input, Button, Typography, Form, notification } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 //Extending ANTD import
@@ -33,12 +27,12 @@ const Background = styled.div`
 
 const LoginCard = styled(Card)`
   position: relative;
-  top: 15%;
+  top: 10%;
   left: 40%;
   padding: 10px;
 
   width: 20vw;
-  height: 30vw;
+  height: 45vw;
   border-radius: 10px;
   text-align: center;
 `;
@@ -69,59 +63,51 @@ const LoginButton = styled(Button)`
   background-color: #143F5D;
 `;
 
-function AdminLogin() {
+const SignupText = styled.div`
+  padding: 1vh 0;
+  font-weight: 400
+`;
+
+function Signup() {
   const router = useRouter();
 
   //useEffect if the user already login or not - if remember me so get from localstorage
   useEffect(() => {
-    if (hasCookie('adminToken')) {
-      router.push('/admin');
+    if (hasCookie('userToken')) {
+      router.push('/');
     }
   });
 
   const onFinish = (values) => {
-    fetch(EndPoint + SignIn, {
+    //console.log("Success:", values);
+    fetch(EndPoint + SignUp, {
       method: "POST",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        email: values.email,
-        password: values.password
-      })
+      body: JSON.stringify({ 
+        name: values.name, 
+        email: values.email, 
+        phone_number: values.phone, 
+        password: values.password })
     })
       .then(response => response.json())
       .then(data => {
         //console.log(data.message.indexOf("success"));
         if (data.message.indexOf("success") == -1) {
           notification["error"]({
-            message: "Login Failed",
+            message: "Signup Failed",
             description: data.message
           })
-        } else if (data.user_information.type != "seller") {
-          notification["error"]({
-            message: "Login Failed",
-            description: "Wrong Login Page! you will be redirected to the right login page in 5 seconds!"
-          })
-
-          setTimeout(function () {
-            router.push('/Login');
-          }, 5000);
-        }
-        else {
+        } else {
           notification["success"]({
-            message: "Login Success",
+            message: "Signup Success",
             description: data.message
           });
 
-          setCookie("adminToken", data.token);
-          setCookie("adminEmail", data.user_information.email);
-          setCookie("adminName", data.user_information.name);
-          setCookie("adminPhoneNumber", data.user_information.phone_number);
-
           setTimeout(function () {
-            router.push('/admin');
+            router.push('/Login');
           }, 5000);
         }
         //setCategoriesNavbar(data.data)
@@ -131,8 +117,8 @@ function AdminLogin() {
   return (
     <Fragment>
       <WebsiteHead
-        title="Login to SC SIM"
-        desc="Login page to enter Startup Campus Sistem Informasi"
+        title="Signup to FC SIM"
+        desc="Signup page to enter Fashion Campus Sistem Informasi"
       />
       <Background>
         <LoginCard>
@@ -142,8 +128,20 @@ function AdminLogin() {
             width={70}
             height={70}
           />
-          <Title level={4}>Login to MIS</Title>
+          <Title level={4}>Signup to MIS</Title>
           <LoginForm name="login form" onFinish={onFinish}>
+            Name
+            <Form.Item
+              name="name"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your name!",
+                },
+              ]}
+            >
+              <LoginInput placeholder="Type your name" bordered={false} />
+            </Form.Item>
             Email
             <Form.Item
               name="email"
@@ -160,6 +158,18 @@ function AdminLogin() {
               ]}
             >
               <LoginInput placeholder="Type your email" bordered={false} />
+            </Form.Item>
+            Phone Number
+            <Form.Item
+              name="phone"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your phone number!",
+                },
+              ]}
+            >
+              <LoginInput placeholder="Type your phone number" bordered={false} />
             </Form.Item>
             Password
             <Form.Item
@@ -181,9 +191,10 @@ function AdminLogin() {
             </Form.Item>
             <Form.Item>
               <LoginButton type="primary" shape="round" block htmlType="submit">
-                Login
+                Signup
               </LoginButton>
             </Form.Item>
+            <SignupText>If you already have an account. Please click here to <Link href={'/Login'}>login</Link></SignupText>
           </LoginForm>
         </LoginCard>
       </Background>
@@ -191,4 +202,4 @@ function AdminLogin() {
   );
 }
 
-export default AdminLogin;
+export default Signup;

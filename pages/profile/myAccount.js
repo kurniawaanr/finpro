@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
-import { Typography, Divider, Form, Input, Button } from "antd";
+import { Typography, Divider, Form, Input, Button, notification } from "antd";
 import styled from "styled-components";
+
+import { getCookie } from 'cookies-next';
 
 import PublicLayout from "../../layouts/PublicLayout";
 import ProfilePageLayout from "../../layouts/ProfilePageLayout";
 import { shippingFormStructure } from "../../SystemConfig";
+
+import { EndPoint, UserProfile, UserShippingAddress } from "../../SystemApis";
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -26,23 +30,41 @@ const layout = {
 function MyAccountPage() {
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
-    const [shippingName, setShippingName] = useState("");
-    const [shippingTelp, setShippingTelp] = useState("");
-    const [shippingAddress, setShippingAddress] = useState("");
+    const [userPhone, setUserPhone] = useState("");
 
     const [form] = Form.useForm();
     let formItems = [];
 
     useEffect(() => {
-        setUserName("John Doe");
-        setUserEmail("johndoe@gmail.com");
+        fetch(EndPoint + UserProfile, {
+            headers: {
+                'Authentication': getCookie("userToken")
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setUserEmail(data.email);
+                setUserName(data.name);
+                setUserPhone(data.phone_number);
+            });
 
-        form.setFieldsValue({
-            name: "William Onnyx",
-            phone: "08123456789",
-            address: "22, Street Road, South jakarta, DKI Jakarta, 12029"
-        });
-    });
+        fetch(EndPoint + UserShippingAddress, {
+            headers: {
+                'Authentication': getCookie("userToken")
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                form.setFieldsValue({
+                    name: data.data.name,
+                    phone: data.data.phone_number,
+                    address: data.data.address,
+                    city: data.data.city
+                });
+            });
+
+
+    }, []);
 
     const fieldType = (formItem) => {
         const attrs = {
@@ -67,7 +89,36 @@ function MyAccountPage() {
     }
 
     const onFinish = (values) => {
-        console.log('Received values of form:', values);
+        //console.log('Received values of form:', values);
+        fetch(EndPoint + UserShippingAddress, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authentication': getCookie("userToken")
+            },
+            body: JSON.stringify({
+                name: values.name,
+                phone_number: values.phone,
+                address: values.address,
+                city: values.city,
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                //console.log(data);
+                if (data.message.indexOf("success") == -1) {
+                    notification["error"]({
+                        message: "Update Failed",
+                        description: data.message
+                    })
+                } else {
+                    notification["success"]({
+                        message: "Update Success",
+                        description: data.message
+                    });
+                }
+            });
     };
 
     shippingFormStructure.forEach(formItem => {
@@ -78,9 +129,9 @@ function MyAccountPage() {
         <PublicLayout title="My Account Page">
             <ProfilePageLayout menuKey="myAccount">
                 <Title level={3}>General Information</Title>
-                <Text strong>Name: {userName} <br /></Text>
-                <Text strong>Email: {userEmail} <br /></Text>
-                <Text strong>Password: ******** <br /></Text>
+                <Text strong>Name &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {userName} <br /></Text>
+                <Text strong>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {userEmail} <br /></Text>
+                <Text strong>Phone Number : {userPhone} <br /></Text>
 
                 <ProfilePageDivider />
                 <Title level={3}>Shipping Address</Title>

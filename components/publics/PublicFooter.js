@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import styled from "styled-components";
 
@@ -11,7 +12,7 @@ const { Title } = Typography;
 const FooterBackground = styled.div`
   position: relative;
   padding: 3vh 1vw;
-  background-color: darkgray;
+  background-color: #529EBF;
   color: black;
   width: 100vw;
   height: 40vh;
@@ -53,90 +54,82 @@ const LinkedText = styled.a`
     display: block;
 `;
 
+const AddressText = styled.p`
+    text-align: justify;
+    width: 15vw;
+`;
+
+/*
+<DescriptionBox>
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet dui nec pulvinar ultricies. Fusce accumsan auctor elit, ac hendrerit justo malesuada ac. Donec faucibus aliquam feugiat. Mauris commodo tellus sed pulvinar convallis.
+</DescriptionBox>
+
+<MiddleFooter>
+    <LinkedText href="http://www.google.com" target="_blank"> About us</LinkedText>
+    <LinkedText href="http://www.google.com" target="_blank"> Product & services</LinkedText>
+    <LinkedText href="http://www.google.com" target="_blank"> Payment status</LinkedText>
+    <LinkedText href="http://www.google.com" target="_blank"> Track your order</LinkedText>
+    <LinkedText href="http://www.google.com" target="_blank"> Become our seller</LinkedText>
+    <LinkedText href="http://www.google.com" target="_blank"> Contact us</LinkedText>
+</MiddleFooter>
+*/
+
 
 function PublicFooter() {
     return (
         <Fragment>
             <FooterBackground>
                 <LeftFooter>
-                    <ImageBox>
-                        <Image
-                            src="/images/Startup-Campus-Site-Logo.png"
-                            alt="Startup Campus Logo"
-                            width={150}
-                            height={40}
-                        />
-                    </ImageBox>
-                    <DescriptionBox>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed laoreet dui nec pulvinar ultricies. Fusce accumsan auctor elit, ac hendrerit justo malesuada ac. Donec faucibus aliquam feugiat. Mauris commodo tellus sed pulvinar convallis.
-                    </DescriptionBox>
+                    <Link href={'/'}>
+                        <ImageBox>
+                            <Image
+                                src="/images/Fashion Campus Logo.png"
+                                alt="Fashion Campus Logo"
+                                width={50}
+                                height={50}
+                            />
+                        </ImageBox>
+                    </Link>
                     <ChannelsBox>
                         <Title level={4}>Our Channels</Title>
-                        <ChannelIcon>
-                            <Image
-                                src="/images/icons/twitter.png"
-                                alt="Twitter Logo"
-                                width={30}
-                                height={30}
-                            />
-                        </ChannelIcon>
-                        <ChannelIcon>
-                            <Image
-                                src="/images/icons/instagram.png"
-                                alt="Instagram Logo"
-                                width={30}
-                                height={30}
-                            />
-                        </ChannelIcon>
-                        <ChannelIcon>
-                            <Image
-                                src="/images/icons/tik-tok.png"
-                                alt="Tiktok Logo"
-                                width={30}
-                                height={30}
-                            />
-                        </ChannelIcon>
-                        <ChannelIcon>
-                            <Image
-                                src="/images/icons/facebook.png"
-                                alt="Facebook Logo"
-                                width={30}
-                                height={30}
-                            />
-                        </ChannelIcon>
-                        <ChannelIcon>
-                            <Image
-                                src="/images/icons/linkedin.png"
-                                alt="Linkedin Logo"
-                                width={30}
-                                height={30}
-                            />
-                        </ChannelIcon>
-                        <ChannelIcon>
-                            <Image
-                                src="/images/icons/youtube.png"
-                                alt="Youtube Logo"
-                                width={30}
-                                height={30}
-                            />
-                        </ChannelIcon>
+                        <a href="https://www.instagram.com/startupcampus.id/" target="_blank">
+                            <ChannelIcon>
+                                <Image
+                                    src="/images/icons/instagram.png"
+                                    alt="Instagram Logo"
+                                    width={30}
+                                    height={30}
+                                />
+                            </ChannelIcon>
+                        </a>
+                        <a href="https://www.linkedin.com/company/startupcampusid/" target="_blank">
+                            <ChannelIcon>
+                                <Image
+                                    src="/images/icons/linkedin.png"
+                                    alt="Linkedin Logo"
+                                    width={30}
+                                    height={30}
+                                />
+                            </ChannelIcon>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCbVbOn_GRQXbIHUA6NP9t3w" target="_blank">
+                            <ChannelIcon>
+                                <Image
+                                    src="/images/icons/youtube.png"
+                                    alt="Youtube Logo"
+                                    width={30}
+                                    height={30}
+                                />
+                            </ChannelIcon>
+                        </a>
                     </ChannelsBox>
                 </LeftFooter>
-                <MiddleFooter>
-                    <LinkedText href="http://www.google.com" target="_blank"> About us</LinkedText>
-                    <LinkedText href="http://www.google.com" target="_blank"> Product & services</LinkedText>
-                    <LinkedText href="http://www.google.com" target="_blank"> Payment status</LinkedText>
-                    <LinkedText href="http://www.google.com" target="_blank"> Track your order</LinkedText>
-                    <LinkedText href="http://www.google.com" target="_blank"> Become our seller</LinkedText>
-                    <LinkedText href="http://www.google.com" target="_blank"> Contact us</LinkedText>
-                </MiddleFooter>
                 <RightFooter>
                     <Title level={5}>Our Location</Title>
-                    <p>
-                        Address -- 123 Street Road, South <br />
-                        Jakarta, DKI Jakarta, Indonesia
-                    </p>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8096018.701773022!2d101.41263544999995!3d-7.775598899999991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a59f8aaddadb7%3A0xdc6b1bc588b24967!2sMSIB%20Kampus%20Merdeka%20Corner!5e0!3m2!1sen!2sde!4v1662321513925!5m2!1sen!2sde" width="200" height="150" style={{border:0}} loading="lazy"></iframe>
+                    <AddressText>
+                        Jl. Sunan Giri No.7A, RT.2/RW.15, Rawamangun, Kec. Pulo Gadung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13220, Indonesia
+                    </AddressText>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d126917.80187000643!2d106.7929715!3d-6.2398191!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f494bb3e76b9%3A0x5e59265b6afdc4ba!2sYAPI%20Center!5e0!3m2!1sen!2sde!4v1665740765343!5m2!1sen!2sde" width="200" height="150" style={{ border: 0 }} loading="lazy"></iframe>
                 </RightFooter>
             </FooterBackground>
         </Fragment>

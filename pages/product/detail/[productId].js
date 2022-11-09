@@ -1,15 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 
-import { Row, Col, Carousel, Typography, Button, InputNumber, Divider } from "antd";
-import { HeartOutlined, ShareAltOutlined, HeartFilled } from "@ant-design/icons";
+import { hasCookie, getCookie } from 'cookies-next';
+
+import { Row, Col, Carousel, Typography, Button, InputNumber, Divider, notification } from "antd";
 const { Title, Text } = Typography;
 import styled from "styled-components";
 
+import { EndPoint, ProductDetail, CartApi } from "../../../SystemApis";
+
 //Use Redux
 import { useDispatch, useSelector } from "react-redux";
-import { wishlistItems, addItemWishlistHandler, removeItemWishlistHandler } from "../../../store/features/wishlistReducer";
-import { addChangeItemCartHandler } from "../../../store/features/cartReducer";
 
 import PublicLayout from "../../../layouts/PublicLayout";
 
@@ -26,6 +27,10 @@ const ProductDetailCarousel = styled.div`
 const ItemSizeRadio = styled(Button)`
     margin: 0 0.25vw;
     border-radius: 5px;
+    &.selected {
+        background-color: #143f5d;
+        color: white;
+    }
 `;
 
 const ProductDetailBox = styled.div`
@@ -51,42 +56,99 @@ const SPImage = styled.img`
 function DetailProductPage() {
     const dispatch = useDispatch();
     const selector = useSelector;
-    const wishlistArr = selector(wishlistItems);
+    //const wishlistArr = selector(wishlistItems);
 
     const [productName, setProductName] = useState('');
-    const [brandName, setBrandName] = useState('');
     const [price, setPrice] = useState('');
     const [productDetail, setProductDetail] = useState('');
-    const [faves, setFaves] = useState();
+    const [sizeOptions, setSizeOptions] = useState([]);
+    const [productPictures, setProductPictures] = useState([]);
+
     const [itemSize, setItemSize] = useState("s");
     const qtyInput = useRef(1);
 
     const router = useRouter();
     //console.log(router.query.productId);
 
+    const formatNumberCurrency = x => {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     useEffect(() => {
-        setProductName("Navy Club Tas Selempang Travel Cross Body Bag GGH - Sling bag - Hitam");
-        setBrandName("Tokopedia");
-        setPrice("Rp119.000");
-        setProductDetail("Navy Club Tas Selempang Punggung berbahan polyester cocok untuk Anda yang sering beraktifitas diluar ruangan/outdoor. Pada kolom utama dilengkapi dengan sekat tablet dan kaitan untuk gantungan kunci. Tersedia kolom tambahan dibagian depan tas untuk menyimpan barang yang sering diakses.");
+        fetch(EndPoint + ProductDetail + router.query.productId)
+            .then(response => response.json())
+            .then(data => {
+                setProductName(data.data.title);
+                setPrice("Rp. " + formatNumberCurrency(data.data.price ? data.data.price : 0));
+                setProductDetail(data.data.product_detail);
+                setProductPictures(data.data.images_url);
+                setSizeOptions(data.data.size);
+            });
 
-        setFaves(wishlistArr.includes(router.query.productId))
-    });
+    },[]);
 
-    const AddWishlistHandler = () => {
+    /* const AddWishlistHandler = () => {
         setFaves(true);
         dispatch(addItemWishlistHandler({itemId: router.query.productId}));
     }
     const RemoveWishlistHandler = () => {
         setFaves(false);
         dispatch(removeItemWishlistHandler({itemId: router.query.productId}));
-    }
+    }*/
 
     const AddCartHandler = () => {
         //console.log("test");
         //console.log(qtyInput.current.value);
         //console.log(itemSize);
-        dispatch(addChangeItemCartHandler({itemId: router.query.productId, size: itemSize, qty: qtyInput.current.value, type: "add"}));
+
+        if (!itemSize || qtyInput.current.value < 1) {
+            notification["error"]({
+                message: "Add to cart Failed",
+                description: "Please check your input!"
+            })
+        } else {
+
+            if (!hasCookie("userToken")) {
+                notification["error"]({
+                    message: "Add to cart Failed",
+                    description: "You have to login first!"
+                })
+
+                setTimeout(function () {
+                    router.push('/Login');
+                }, 3000);
+            } else {
+                fetch(EndPoint + CartApi, {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authentication': getCookie("userToken")
+                    },
+                    body: JSON.stringify({
+                        id: router.query.productId,
+                        quantity: qtyInput.current.value,
+                        size: itemSize
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        //console.log(data);
+                        if (data.message.indexOf("success") == -1) {
+                            notification["error"]({
+                                message: "Add to cart Failed",
+                                description: data.message
+                            })
+                        } else {
+                            notification["success"]({
+                                message: "Add to cart Success",
+                                description: data.message
+                            });
+                        }
+                    });
+            }
+        }
+        //dispatch(addChangeItemCartHandler({ itemId: router.query.productId, size: itemSize, qty: qtyInput.current.value, type: "add" }));
     }
 
     return (
@@ -95,7 +157,14 @@ function DetailProductPage() {
                 <Col className="gutter-row" span={8}>
                     <ProductDetailCarousel>
                         <Carousel autoplay>
-                            <div>
+                            {productPictures.map(pPicture => {
+                                return (
+                                    <div>
+                                        <ProductDetailPicture src={EndPoint + pPicture} />
+                                    </div>
+                                );
+                            })}
+                            {/*<div>
                                 <ProductDetailPicture src="https://images.tokopedia.net/img/cache/700/VqbcmM/2022/6/4/d1ce779e-adaf-4449-bd52-d91f73dcc23c.jpg.webp?ect=4g" />
                             </div>
                             <div>
@@ -106,55 +175,40 @@ function DetailProductPage() {
                             </div>
                             <div>
                                 <ProductDetailPicture src="https://images.tokopedia.net/img/cache/100-square/VqbcmM/2022/6/4/bc460c58-a5c7-4fe1-8dd4-579c476f8097.jpg.webp?ect=4g" />
-                            </div>
+                            </div>*/}
                         </Carousel>
                     </ProductDetailCarousel>
                 </Col>
                 <Col className="gutter-row" span={12}>
                     <Title level={2}>{productName}</Title>
                     <br />
-                    <Text type="secondary">{brandName}</Text>
-                    <br />
                     <Title level={4}>{price}</Title>
                     Size &nbsp;
-                    <ItemSizeRadio onClick={(e)=>setItemSize("s")}>S</ItemSizeRadio>
-                    <ItemSizeRadio onClick={(e)=>setItemSize("m")}>M</ItemSizeRadio>
-                    <ItemSizeRadio onClick={(e)=>setItemSize("l")}>L</ItemSizeRadio>
-                    <ItemSizeRadio onClick={(e)=>setItemSize("xl")}>XL</ItemSizeRadio>
+                    {
+                        sizeOptions.map(sOpt => {
+                            return (
+                                <ItemSizeRadio className="sizeOptions" id={"size" + sOpt} onClick={(e) => {
+                                    setItemSize(sOpt);
+                                    document.querySelectorAll(".sizeOptions").forEach(el => { el.classList.remove("selected") });
+                                    document.getElementById("size" + sOpt).classList.add("selected");
+                                }}>{sOpt}</ItemSizeRadio>
+                            );
+                        })
+                    }
+                    {/*<ItemSizeRadio onClick={(e) => setItemSize("s")}>S</ItemSizeRadio>
+                    <ItemSizeRadio onClick={(e) => setItemSize("m")}>M</ItemSizeRadio>
+                    <ItemSizeRadio onClick={(e) => setItemSize("l")}>L</ItemSizeRadio>
+                    <ItemSizeRadio onClick={(e) => setItemSize("xl")}>XL</ItemSizeRadio>*/}
                     <br /><br />
                     Qty &nbsp; <InputNumber ref={qtyInput} />
-                    <br/><br />
-                    <Button type="primary" onClick={AddCartHandler}>Add to cart</Button> &nbsp; {!faves && <HeartOutlined onClick={AddWishlistHandler} style={{fontSize: "25px"}} />}{faves && <HeartFilled onClick={RemoveWishlistHandler} style={{fontSize: "25px"}} />} &nbsp; <ShareAltOutlined style={{fontSize: "25px"}} />
+                    <br /><br />
+                    <Button type="primary" onClick={AddCartHandler}>Add to cart</Button>
                 </Col>
             </Row>
             <ProductDetailBox>
                 <Title level={3}>Product Detail</Title>
                 <ProductDetailDivider />
                 <p>{productDetail}</p>
-            </ProductDetailBox>
-            <ProductDetailBox>
-                <Title level={3}>Similar Products</Title>
-                <ProductDetailDivider />
-                <Carousel autoplay slidesToShow={5}>
-                    <SPSlideShow>
-                        <SPImage src="https://s1.bukalapak.com/img/11556714892/s-246-246/data.jpeg.webp" />
-                    </SPSlideShow>
-                    <SPSlideShow>
-                        <SPImage src="https://s2.bukalapak.com/img/23991616792/s-246-246/data.jpeg.webp" />
-                    </SPSlideShow>
-                    <SPSlideShow>
-                        <SPImage src="https://s2.bukalapak.com/img/25081499692/s-246-246/data.jpeg.webp" />
-                    </SPSlideShow>
-                    <SPSlideShow>
-                        <SPImage src="https://s2.bukalapak.com/img/79689041572/s-246-246/data.jpeg.webp" />
-                    </SPSlideShow>
-                    <SPSlideShow>
-                        <SPImage src="https://s0.bukalapak.com/img/58914080992/s-246-246/data.jpeg.webp" />
-                    </SPSlideShow>
-                    <SPSlideShow>
-                        <SPImage src="https://s1.bukalapak.com/img/66099775371/s-246-246/data.jpeg.webp" />
-                    </SPSlideShow>
-                </Carousel>
             </ProductDetailBox>
 
 

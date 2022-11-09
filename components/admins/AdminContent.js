@@ -13,8 +13,7 @@ import { useRouter } from "next/router";
 const ContentBackground = styled.div`
   position: absolute;
   background-color: white;
-  top: 9vh;
-  left: 16vw;
+  left: 14vw;
   width: 84vw;
   min-height: 91vh;
   padding: 10px;
@@ -62,6 +61,9 @@ function AdminContent(props) {
       <MainColumn>
         {props.showTable && (
           <AdminTable columns={props.tableStructure} data={props.tableData} onSetSortedInfo={props.onSetSortedInfo} />
+        )}
+        {props.children && (
+          props.children
         )}
       </MainColumn>
     </ContentBackground>
