@@ -129,7 +129,7 @@ function PublicFooter() {
                     <AddressText>
                         Jl. Sunan Giri No.7A, RT.2/RW.15, Rawamangun, Kec. Pulo Gadung, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13220, Indonesia
                     </AddressText>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d126917.80187000643!2d106.7929715!3d-6.2398191!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f494bb3e76b9%3A0x5e59265b6afdc4ba!2sYAPI%20Center!5e0!3m2!1sen!2sde!4v1665740765343!5m2!1sen!2sde" width="200" height="150" style={{ border: 0 }} loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d126917.80187000643!2d106.7929715!3d-6.2398191!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f494bb3e76b9%3A0x5e59265b6afdc4ba!2sYAPI%20Center!5e0!3m2!1sen!2sde!4v1665740765343!5m2!1sen!2sde" width="200" height="110" style={{ border: 0 }} loading="lazy"></iframe>
                 </RightFooter>
             </FooterBackground>
         </Fragment>

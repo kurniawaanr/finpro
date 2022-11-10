@@ -24,7 +24,7 @@ const NavbarBackground = styled.div`
   background-color: #529EBF;
   color: black;
   width: 100%;
-  height: 9vh;
+  height: 10vh;
   box-shadow: 0 8px 8px -4px #0000000f;
   z-index: 10;
 `;
