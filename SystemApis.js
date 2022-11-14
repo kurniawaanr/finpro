@@ -1,4 +1,6 @@
-export const EndPoint = "http://35.240.202.103:5000";
+import getConfig from 'next/config'
+
+export const EndPoint = getConfig().publicRuntimeConfig.backend_url;
 
 export const HomeBanner = "/home/banner";
 export const HomeCategory = "/home/category";
