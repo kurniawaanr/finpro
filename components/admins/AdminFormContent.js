@@ -86,6 +86,7 @@ function AdminFormContent(props) {
 
     const getPicturesText = files => {
         return new Promise(resolve => {
+            //console.log(files);
             //Get all images
             let picturesUpload = [];
 
@@ -104,11 +105,17 @@ function AdminFormContent(props) {
                             //console.log("transform: " + picturesUpload.length);
 
                             if (files.length == picturesUpload.length) {
+                                //console.log("IN INside")
                                 resolve(picturesUpload);
                             }
                         })
                 }
             });
+
+            if (files.length == picturesUpload.length) {
+                //console.log("IN OUTside")
+                resolve(picturesUpload);
+            }
         });
     }
 
@@ -129,7 +136,7 @@ function AdminFormContent(props) {
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data.data)
+                    //console.log(data.data)
                     const getDataInit = data.data;
 
                     //get pictures
@@ -227,7 +234,7 @@ function AdminFormContent(props) {
     }
 
     const onFinish = async (values) => {
-        console.log('Received values of form:', values);
+        //console.log('Received values of form:', values);
         if (props.fKey == "productCategory") {
             if (props.fId == "add") {
                 fetch(EndPoint + Categories, {
@@ -305,7 +312,6 @@ function AdminFormContent(props) {
                         }, 5000);
                     });
             } else {
-                //console.log("IN");
                 //console.log(tmpVar[0]);
                 fetch(EndPoint + ProductsList, {
                     method: "PUT",

@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { getCookie } from 'cookies-next';
 
-import { EndPoint, OrderApi } from "../../SystemApis";
+import { EndPoint, GetOrderApi } from "../../SystemApis";
 
 import AdminLayout from "../../layouts/AdminLayout";
 
@@ -11,7 +11,7 @@ function AdminOrderPage() {
     const [tableData, setTableData] = useState([]);
 
     useEffect(() => {
-        fetch(EndPoint + OrderApi, {
+        fetch(EndPoint + GetOrderApi, {
             headers: {
                 'Authentication': getCookie("adminToken")
             }

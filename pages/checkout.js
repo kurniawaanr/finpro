@@ -136,7 +136,8 @@ function Checkout() {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authentication': getCookie("userToken")
                 },
                 body: JSON.stringify({
                     shipping_method: shipping_mtd.name,
@@ -175,6 +176,7 @@ function Checkout() {
 
     const deleteItemHandler = itemId => {
         fetch(EndPoint + CartApi + "/" + itemId, {
+            method: "DELETE",
             headers: {
                 'Authentication': getCookie("userToken")
             }

@@ -17,12 +17,13 @@ export const UserProfile = "/user";
 export const UserShippingAddress = "/user/shipping_address";
 export const UserBalances = "/user/balance";
 
-export const GetOrderList = "/user/orders";
+export const GetOrderList = "/user/order";
 
 export const CartApi = "/cart";
 
 export const ShippingPrice = "/shipping_price";
 
 export const OrderApi = "/order";
+export const GetOrderApi = "/orders";
 
 export const TotalSales = "/sales";

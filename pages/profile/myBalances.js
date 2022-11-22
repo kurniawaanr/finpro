@@ -45,7 +45,7 @@ function MyBalances() {
     const onFinish = (values) => {
         //console.log('Received values of form:', values);
         fetch(EndPoint + UserBalances, {
-            method: "PUT",
+            method: "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
