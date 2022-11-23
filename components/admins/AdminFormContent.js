@@ -125,7 +125,7 @@ function AdminFormContent(props) {
             var ids = props.fId.split("-")
             setTmpVar(ids);
             form.setFieldsValue({
-                title: ids[1]
+                title: ids[ids.length-1]
             });
         } else if (props.fId != 'add' && props.fKey == "product") {
             setTmpVar(props.fId);
@@ -319,7 +319,7 @@ function AdminFormContent(props) {
                         'Authentication': getCookie("adminToken")
                     },
                     body: JSON.stringify({
-                        product_id: tmpVar[0],
+                        product_id: tmpVar,
                         product_name: values.name,
                         description: values.description,
                         price: values.price,
