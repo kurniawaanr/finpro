@@ -11,6 +11,10 @@ from utils import run_query, get_engine
 # Helpers
 ##############################################################################################
 
+# you can only change this variable
+YOUR_IP = "34.143.213.160"
+
+
 
 def test(f: callable):
     @wraps(f)
@@ -166,6 +170,7 @@ def gen_uuid():
     id = uuid.uuid4()
     return id
 
+HOST = f"http://{YOUR_IP}:5000"
 
 @test
 def test_end_to_end():
@@ -306,7 +311,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            f"/image/{image_name}",
+            f"{HOST}/image/{image_name}",
             exp_code=200,
         )
 
@@ -314,7 +319,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            "/home/banner",
+            f"{HOST}/home/banner",
             exp_json={
                 "data": [
                     {
@@ -331,7 +336,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            "/home/category",
+            f"{HOST}/home/category",
             exp_json={
                 "data": [
                     {
@@ -348,7 +353,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            "/sign-up",
+            f"{HOST}/sign-up",
             json={"name": "Raihan Parlaungan", "email": "raihan@gmail.com",
                   "phone_number": "081380737126", "password": "password1234"},
             exp_json={
@@ -359,7 +364,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            "/sign-up",
+            f"{HOST}/sign-up",
             json={"name": "Raymond Christhoper", "email": "raymond@gmail.com",
                   "phone_number": "082713626", "password": "password5678"},
             exp_json={
@@ -370,7 +375,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            "/sign-up",
+            f"{HOST}/sign-up",
             json={"name": "Raihan Parlaungan", "email": "raihan@gmail.com",
                   "phone_number": "081380737126", "password": "password1234"},
             exp_json={
@@ -382,7 +387,7 @@ def test_end_to_end():
         response = assert_response(
             c,
             "post",
-            "/sign-in",
+            f"{HOST}/sign-in",
             json={"email": "raihan@gmail.com", "password": "password1233"},
             exp_json={"message": "error, Email or password is incorrect"},
             exp_code=401,
@@ -391,7 +396,7 @@ def test_end_to_end():
         response = assert_response(
             c,
             "post",
-            "/sign-in",
+            f"{HOST}/sign-in",
             json={"email": "raihan@gmail.com", "password": "password1234"},
             exp_json={
                 "message": "Login success",
@@ -411,7 +416,7 @@ def test_end_to_end():
         response = assert_response(
             c,
             "post",
-            "/sign-in",
+            f"{HOST}/sign-in",
             json={"email": "raymond@gmail.com", "password": "password5678"},
             exp_json={
                 "message": "Login success",
@@ -431,7 +436,7 @@ def test_end_to_end():
         response = assert_response(
             c,
             "post",
-            "/sign-in",
+            f"{HOST}/sign-in",
             json={"email": "ilham@gmail.com", "password": "password5679"},
             exp_json={
                 "message": "Login success",
@@ -456,8 +461,7 @@ def test_end_to_end():
                 assert_response(
                     c,
                     "get",
-                    "/products",
-                    f"/products?page=1&page_size=100&sort_by={sort_by}&category=id category b&price={price}&condition=used&product_name=Item B",
+                    f"{HOST}/products?page=1&page_size=100&sort_by={sort_by}&category=id category b&price={price}&condition=used&product_name=Item B",
                     exp_json={
                         "message": "error, Item is not available"},
                     exp_code=400,
@@ -475,8 +479,7 @@ def test_end_to_end():
                 assert_response(
                     c,
                     "get",
-                    "/products",
-                    f"/products?page=1&page_size=100&sort_by={sort_by}&category={products_data[0]['category_id']}&price={price}&condition=used&product_name=Item B",
+                    f"{HOST}/products?page=1&page_size=100&sort_by={sort_by}&category={products_data[0]['category_id']}&price={price}&condition=used&product_name=Item B",
                     exp_json={
                         "message": "error, Item is not available"},
                     exp_code=400,
@@ -485,7 +488,7 @@ def test_end_to_end():
                 assert_response(
                     c,
                     "get",
-                    f"/products?page=1&page_size=100&sort_by={sort_by}&category={products_data[0]['category_id']}&price={price}&condition=used&product_name=Item A",
+                    f"{HOST}/products?page=1&page_size=100&sort_by={sort_by}&category={products_data[0]['category_id']}&price={price}&condition=used&product_name=Item A",
                     exp_json={
                         "data": [
                             {
@@ -504,7 +507,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            "/categories",
+            f"{HOST}/categories",
             exp_json={
                 "data": [
                     {
@@ -520,7 +523,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            f"/products/search_image?image={base64_string}",
+            f"{HOST}/products/search_image?image={base64_string}",
             exp_json={"category_id": products_data[1]["category_id"]},
             exp_code=200,
         )
@@ -529,7 +532,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            f"/products/{products_data[1]['id']}",
+            f"{HOST}/products/{products_data[1]['id']}",
             exp_json={
                 "id": products_data[1]["id"],
                 "images_url": ["/image/image1", "/image/image2"],
@@ -557,7 +560,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            f"/cart",
+            f"{HOST}/cart",
             json={"id": sizes_data[3]["product_id"],
                   "quantity": 10, "size": "M"},
             headers={"Authentication": seller_token[0]},
@@ -568,7 +571,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            f"/cart",
+            f"{HOST}/cart",
             json={"id": sizes_data[3]["product_id"],
                   "quantity": 10, "size": "M"},
             headers={"Authentication": buyer_token[1]},
@@ -583,7 +586,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            "/cart",
+            f"{HOST}/cart",
             headers={"Authentication": buyer_token[1]},
             exp_json={
                 "data": [
@@ -620,7 +623,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            "/user/shipping_address",
+            f"{HOST}/user/shipping_address",
             headers={"Authentication": buyer_token[1]},
             exp_json={
                 "data": {
@@ -652,7 +655,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            "/shipping_price",
+            f"{HOST}/shipping_price",
             headers={"Authentication": seller_token[0]},
             exp_json={"message": "error, Unauthorized user"},
             exp_code=403,
@@ -661,7 +664,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            "/shipping_price",
+            f"{HOST}/shipping_price",
             headers={"Authentication": buyer_token[0]},
             exp_json={"message": "error, Cart is empty"},
             exp_code=400,
@@ -670,7 +673,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            f"/shipping_price",
+            f"{HOST}/shipping_price",
             headers={"Authentication": buyer_token[1]},
             exp_json={
                 "data": [
@@ -691,7 +694,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            "/order",
+            f"{HOST}/order",
             json={"shipping_method": "same day", "shipping_address":
                   {
                       "name": "address name",
@@ -708,7 +711,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            "/order",
+            f"{HOST}/order",
             json={"shipping_method": "same day", "shipping_address":
                   {
                       "name": "address name",
@@ -725,7 +728,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            "/user/balance?amount=355000",
+            f"{HOST}/user/balance?amount=355000",
             headers={"Authentication": buyer_token[1]},
             exp_json={"message": "Top Up balance success"},
             exp_code=200,
@@ -734,7 +737,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            "/order",
+            f"{HOST}/order",
             json={"shipping_method": "same day", "shipping_address":
                   {
                       "name": "address name",
@@ -752,7 +755,7 @@ def test_end_to_end():
         assert_response(
             c,
             "delete",
-            f"/cart/{carts_data1[0]['id']}",
+            f"{HOST}/cart/{carts_data1[0]['id']}",
             headers={"Authentication": seller_token[0]},
             exp_json={"message": "error, Unauthorized user"},
             exp_code=403,
@@ -761,7 +764,7 @@ def test_end_to_end():
         assert_response(
             c,
             "delete",
-            f"/cart/{carts_data1[0]['id']}",
+            f"{HOST}/cart/{carts_data1[0]['id']}",
             headers={"Authentication": buyer_token[1]},
             exp_json={"message": "Cart deleted"},
             exp_code=200,
@@ -771,7 +774,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            "/user",
+            f"{HOST}/user",
             headers={"Authentication": buyer_token[0]},
             exp_json={
                 "data":
@@ -788,7 +791,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            "/user/shipping_address",
+            f"{HOST}/user/shipping_address",
             headers={"Authentication": buyer_token[1]},
             json={
                 "name": "address name",
@@ -808,7 +811,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            "/user/balance?amount=10000",
+            f"{HOST}/user/balance?amount=10000",
             headers={"Authentication": buyer_token[0]},
             exp_json={"message": "Top Up balance success"},
             exp_code=200,
@@ -818,7 +821,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            "/user/balance",
+            f"{HOST}/user/balance",
             headers={"Authentication": buyer_token[0]},
             exp_json={
                 "data":
@@ -833,7 +836,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            "/order",
+            f"{HOST}/order",
             headers={"Authentication": buyer_token[1]},
             exp_json={
                 "data": [
@@ -871,7 +874,7 @@ def test_end_to_end():
             assert_response(
                 c,
                 "get",
-                f"/orders?sort_by={sort_by}&page=1&page_size=25&is_admin=False",
+                f"{HOST}/orders?sort_by={sort_by}&page=1&page_size=25&is_admin=False",
                 headers={"Authentication": buyer_token[0]},
                 exp_json={"message": "error, user is not admin"},
                 exp_code=400,
@@ -907,7 +910,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            "/products",
+            f"{HOST}/products",
             json={"product_name": "Product 1", "description": "Lorem ipsum", "images": [
                 "image_1", "image_2", "image_3"], "condition": "new", "category": categories_data[0]["id"], "price": 10000},
             headers={"Authentication": seller_token[0]},
@@ -921,7 +924,7 @@ def test_end_to_end():
         assert_response(
             c,
             "put",
-            "/products",
+            f"{HOST}/products",
             json={"product_name": "Product 1", "description": "Lorem ipsum", "images": [
                 "image_1", "image_2", "image_3"], "condition": "new", "category": categories_data[0]["id"], "price": 12000, "product_id": prod[0]["id"]},
             headers={"Authentication": seller_token[0]},
@@ -932,7 +935,7 @@ def test_end_to_end():
         assert_response(
             c,
             "put",
-            "/products",
+            f"{HOST}/products",
             json={"product_name": "Product 2", "description": "Lorem ipsum", "images": [
                 "image_1", "image_2", "image_3"], "condition": "new", "category": categories_data[0]["id"], "price": 10000, "product_id": prod[0]["id"]},
             headers={"Authentication": seller_token[0]},
@@ -944,7 +947,7 @@ def test_end_to_end():
         assert_response(
             c,
             "delete",
-            f"/products/{prod[0]['id']}",
+            f"{HOST}/products/{prod[0]['id']}",
             headers={"Authentication": seller_token[0]},
             exp_json={"message": "Product deleted"},
             exp_code=200,
@@ -954,7 +957,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            "/categories",
+            f"{HOST}/categories",
             json={"category_name": "Category B"},
             headers={"Authentication": buyer_token[0]},
             exp_json={'message': 'error, user is not admin'},
@@ -964,7 +967,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            "/categories",
+            f"{HOST}/categories",
             json={"category_name": "Category B"},
             headers={"Authentication": seller_token[0]},
             exp_json={"message": "Category added"},
@@ -974,7 +977,7 @@ def test_end_to_end():
         assert_response(
             c,
             "post",
-            "/categories",
+            f"{HOST}/categories",
             json={"category_name": "Category B"},
             headers={"Authentication": seller_token[0]},
             exp_json={"message": "error, Category is already exists"},
@@ -987,7 +990,7 @@ def test_end_to_end():
         assert_response(
             c,
             "put",
-            f"/categories/{category[1]['id']}",
+            f"{HOST}/categories/{category[1]['id']}",
             json={"category_name": "Category C",
                   "category_id": f"{category[1]['id']}"},
             headers={"Authentication": seller_token[0]},
@@ -998,7 +1001,7 @@ def test_end_to_end():
         assert_response(
             c,
             "put",
-            f"/categories/{category[0]['id']}",
+            f"{HOST}/categories/{category[0]['id']}",
             json={"category_name": "Category A",
                   "category_id": f"{category[0]['id']}"},
             headers={"Authentication": seller_token[0]},
@@ -1010,7 +1013,7 @@ def test_end_to_end():
         assert_response(
             c,
             "delete",
-            f"/categories/{category[0]['id']}",
+            f"{HOST}/categories/{category[0]['id']}",
             headers={"Authentication": seller_token[0]},
             exp_json={"message": "Category deleted"},
             exp_code=200,
@@ -1019,7 +1022,7 @@ def test_end_to_end():
         assert_response(
             c,
             "delete",
-            f"/categories/{category[0]['id']}",
+            f"{HOST}/categories/{category[0]['id']}",
             headers={"Authentication": seller_token[0]},
             exp_json={"message": "error, id is invalid"},
             exp_code=400,
@@ -1029,7 +1032,7 @@ def test_end_to_end():
         assert_response(
             c,
             "get",
-            "/sales",
+            f"{HOST}/sales",
             headers={"Authentication": seller_token[0]},
             exp_json={
                 "data": {
