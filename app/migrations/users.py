@@ -15,7 +15,7 @@ def create_table_users():
             Column('email', String(128), unique=True),
             Column('password', String(128)),
             Column('phone_number', String(128), unique=True),
-            Column('token', String(64), unique=True),
+            Column('token', String, unique=True),
             Column('type', String(12)),
             Column('balance', Integer)
         )

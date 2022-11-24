@@ -12,7 +12,7 @@ def create_table_carts():
             meta,
             Column('id', String, primary_key=True),
             Column('quantity', Integer),
-            Column('token', String(128)),
+            Column('token', String),
             Column('shipping_method', String(64)),
             Column('size_id', String(128), unique=True),
             Column('created_at', String(128)),

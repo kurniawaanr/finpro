@@ -14,7 +14,7 @@ def create_table_shipping_addresses():
             Column('name', String(128)),
             Column('address', String(128)),
             Column('city', String(64)),
-            Column('token', String(64))
+            Column('token', String)
         )
         meta.create_all(engine)
     else:
