@@ -1,9 +1,46 @@
 version: "3.3"
 
 services:
-   api:
-     image: raihanparl/startup-campus-fe:latest
-     ports:
-     - '3000:3000'
-     env_file:
-     - .env
+  api:
+    image: raihanparl/startup-campus-fe:latest
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+  fashion-campus-db:
+    image: postgres:11-alpine
+    container_name: fashion-campus-db
+    env_file:
+      - .env
+    environment:
+      - FLASK_DEBUG=1
+      - FLASK_APP=./app.py
+      - PYTHONUNBUFFERED=1=value
+    ports:
+      - "5432:5432"
+    networks:
+      - fashion-campus
+    # volumes:
+    #   - /home/ubuntu/box-db-data:/var/lib/postgresql/data
+    restart: always
+
+  fashion-campus:
+    build: .
+    container_name: fashion-campus
+    networks:
+      - fashion-campus
+    env_file:
+      - .env
+    volumes:
+      - ./app:/app
+    ports:
+      - "5000:5000"
+    command: ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
+    depends_on:
+      - fashion-campus-db
+
+volumes:
+  TmpData:
+networks:
+  fashion-campus:
+    external: false
