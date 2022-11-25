@@ -8,11 +8,11 @@ def get_engine():
 
     # UNCOMMENT THIS BEFORE DEPLOY
     engine_uri = "postgresql+psycopg2://{}:{}@{}:{}/{}".format(
-        os.environ["POSTGRES_USER"],
-        os.environ["POSTGRES_PASSWORD"],
-        os.environ["POSTGRES_HOST"],
-        os.environ["POSTGRES_PORT"],
-        os.environ["POSTGRES_DB"],
+        "users",
+        "password",
+        "34.143.213.160",
+        5432,
+        "fashion-campus-db",
     )
 
     return create_engine(engine_uri, future=True)

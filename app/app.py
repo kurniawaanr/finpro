@@ -42,4 +42,4 @@ def create_app():
 app = create_app()
 
 # Uncomment this before deploy
-app.run(debug=True)
+# app.run(debug=True)
