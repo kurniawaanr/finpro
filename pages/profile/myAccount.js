@@ -43,9 +43,9 @@ function MyAccountPage() {
         })
             .then(response => response.json())
             .then(data => {
-                setUserEmail(data.email);
-                setUserName(data.name);
-                setUserPhone(data.phone_number);
+                setUserEmail(data.data.email);
+                setUserName(data.data.name);
+                setUserPhone(data.data.phone_number);
             });
 
         fetch(EndPoint + UserShippingAddress, {

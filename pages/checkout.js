@@ -92,7 +92,7 @@ function Checkout() {
         })
             .then(response => response.json())
             .then(data => {
-                setBalances(data.data.balance * 1000);
+                setBalances(data.data.balance);
             });
 
         fetch(EndPoint + CartApi, {

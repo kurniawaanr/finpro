@@ -123,7 +123,7 @@ function AdminFormContent(props) {
         //console.log(props.fId);
         if (props.fId != 'add' && props.fKey == "productCategory") {
             var ids = props.fId.split("-")
-            setTmpVar(ids);
+            setTmpVar([ids.slice(0,-1).join("-"), ids[ids.length-1]]);
             form.setFieldsValue({
                 title: ids[ids.length-1]
             });
