@@ -174,18 +174,19 @@ function ProductPage() {
 
             var prcs = ""
             if (routerQuery['prcStart']) {
-                prcs = "&harga=" + routerQuery['prcStart'] + "," + routerQuery['prcEnd'];
+                prcs = "&price=" + routerQuery['prcStart'] + "," + routerQuery['prcEnd'];
             }
 
             var kondisis = ""
             if (routerQuery['cond']) {
-                prcs = "&kondisi=" + routerQuery['cond'];
+                prcs = "&condition=" + routerQuery['cond'];
             }
 
             fetch(EndPoint + ProductsList +
                 "?page=" + currPageTemp +
                 "&page_size=" + perPageTemp +
                 "&sort_by=" + sortValue +
+                "&product_name=" + searchWord +
                 cats +
                 prcs +
                 kondisis)
@@ -210,12 +211,12 @@ function ProductPage() {
         } else {
             var prcs = ""
             if (routerQuery['prcStart']) {
-                prcs = "&harga=" + routerQuery['prcStart'] + "," + routerQuery['prcEnd'];
+                prcs = "&price=" + routerQuery['prcStart'] + "," + routerQuery['prcEnd'];
             }
 
             var kondisis = ""
             if (routerQuery['cond']) {
-                prcs = "&kondisi=" + routerQuery['cond'];
+                prcs = "&condition=" + routerQuery['cond'];
             }
 
             fetch(EndPoint + ProductsListByImage, {
@@ -448,7 +449,7 @@ function ProductPage() {
                                         pId={item.id}
                                         name={item.title}
                                         image={EndPoint + item.image}
-                                        price={"Rp. " + formatNumberCurrency(item.price)}
+                                        price={formatNumberCurrency(item.price)}
                                     />
                                 );
                             })}
