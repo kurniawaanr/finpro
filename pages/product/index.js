@@ -186,7 +186,7 @@ function ProductPage() {
                 "?page=" + currPageTemp +
                 "&page_size=" + perPageTemp +
                 "&sort_by=" + sortValue +
-                "&product_name=" + searchWord +
+                "&product_name=" + decodeURIComponent(routerQuery['search']) +
                 cats +
                 prcs +
                 kondisis)
