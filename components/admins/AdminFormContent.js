@@ -240,6 +240,8 @@ function AdminFormContent(props) {
                 fetch(EndPoint + Categories, {
                     method: "POST",
                     headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
                         'Authentication': getCookie("adminToken")
                     },
                     body: JSON.stringify({
@@ -261,6 +263,8 @@ function AdminFormContent(props) {
                 fetch(EndPoint + Categories + "/" + tmpVar[0], {
                     method: "PUT",
                     headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
                         'Authentication': getCookie("adminToken")
                     },
                     body: JSON.stringify({
@@ -290,6 +294,8 @@ function AdminFormContent(props) {
                 fetch(EndPoint + ProductsList, {
                     method: "POST",
                     headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
                         'Authentication': getCookie("adminToken")
                     },
                     body: JSON.stringify({
@@ -316,6 +322,8 @@ function AdminFormContent(props) {
                 fetch(EndPoint + ProductsList, {
                     method: "PUT",
                     headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
                         'Authentication': getCookie("adminToken")
                     },
                     body: JSON.stringify({
