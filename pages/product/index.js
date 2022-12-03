@@ -143,7 +143,7 @@ function ProductPage() {
 
         //SET PER PAGE
         if (routerQuery['perPage']) {
-            setPerPage(routerQuery['perPage']);
+            //setPerPage(routerQuery['perPage']);
             perPageTemp = routerQuery['perPage'];
         }
 
@@ -209,7 +209,7 @@ function ProductPage() {
                             //console.log(data.total_rows);
                             //console.log(perPageTemp);
                             //console.log(currPageTemp);
-                            setPerPage(perPageTemp);
+                            //setPerPage(50);
                             setCurrResult(perPageTemp * currPageTemp);
                         }
                         //setCategoryOptions(data.data)
@@ -256,7 +256,7 @@ function ProductPage() {
                                     if (data.total_rows < perPage) {
                                         perPageTemp = data.total_rows;
                                     }
-                                    setPerPage(perPageTemp);
+                                    //setPerPage(perPageTemp);
                                     setCurrResult(perPageTemp * currPageTemp);
                                 }
                                 //setCategoryOptions(data.data)
@@ -269,7 +269,7 @@ function ProductPage() {
     }, [router.query]);
 
     const onShowSizeChangeHandler = (currentPage, pageSize) => {
-        setPerPage(pageSize);
+        //setPerPage(pageSize);
         setCurrResult(currentPage * pageSize);
 
         router.query["perPage"] = pageSize;
@@ -340,7 +340,7 @@ function ProductPage() {
                     })
                         .then(response => response.json())
                         .then(data => {
-                            var cats = "&category=" + data.category;
+                            var cats = "&category=" + data.category_id;
 
                             fetch(EndPoint + ProductsList +
                                 "?page=" + currPage +
@@ -359,7 +359,7 @@ function ProductPage() {
                                         if (data.total_rows < perPage) {
                                             perPageTemp = data.total_rows;
                                         }
-                                        setPerPage(perPageTemp);
+                                        //setPerPage(perPageTemp);
                                         setCurrResult(perPageTemp * currPage);
                                     }
                                     //setCategoryOptions(data.data)
@@ -472,8 +472,6 @@ function ProductPage() {
                         current={currPage}
                         total={totalResult}
                         pageSize={perPage}
-                        onChange={onPaginationChangeHandler}
-                        onShowSizeChange={onShowSizeChangeHandler}
                     />
                 </PaginationCol>
             </Row>
