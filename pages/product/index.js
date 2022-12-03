@@ -179,35 +179,42 @@ function ProductPage() {
 
             var kondisis = ""
             if (routerQuery['cond']) {
-                prcs = "&condition=" + routerQuery['cond'];
+                kondisis = "&condition=" + routerQuery['cond'];
             }
 
-            fetch(EndPoint + ProductsList +
-                "?page=" + currPageTemp +
-                "&page_size=" + perPageTemp +
-                "&sort_by=" + sortValue +
-                "&product_name=" + decodeURIComponent(routerQuery['search']) +
-                cats +
-                prcs +
-                kondisis)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.data.length > 0) {
-                        setItems(data.data);
-                        setTotalResult(data.total_rows);
-                        if (data.total_rows < perPage) {
-                            perPageTemp = data.total_rows;
+            var pName = ""
+            if (routerQuery['search']) {
+                pName = "&product_name=" + routerQuery['search'];
+            }
+
+            if(routerQuery['search'] || routerQuery['cond'] ||routerQuery['prcStart'] || routerQuery['prcEnd'] || routerQuery['cat']){
+                fetch(EndPoint + ProductsList +
+                    "?page=" + currPageTemp +
+                    "&page_size=" + 50 +
+                    "&sort_by=" + sortValue +
+                    pName +
+                    cats +
+                    prcs +
+                    kondisis)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.data.length > 0) {
+                            setItems(data.data);
+                            setTotalResult(data.total_rows);
+                            if (data.total_rows < perPage) {
+                                perPageTemp = data.total_rows;
+                            }
+                            //console.log(data.message);
+                            //console.log(perPage);
+                            //console.log(data.total_rows);
+                            //console.log(perPageTemp);
+                            //console.log(currPageTemp);
+                            setPerPage(perPageTemp);
+                            setCurrResult(perPageTemp * currPageTemp);
                         }
-                        //console.log(data.message);
-                        //console.log(perPage);
-                        //console.log(data.total_rows);
-                        //console.log(perPageTemp);
-                        //console.log(currPageTemp);
-                        setPerPage(perPageTemp);
-                        setCurrResult(perPageTemp * currPageTemp);
-                    }
-                    //setCategoryOptions(data.data)
-                });
+                        //setCategoryOptions(data.data)
+                    });
+            }
         } else {
             var prcs = ""
             if (routerQuery['prcStart']) {
@@ -231,33 +238,35 @@ function ProductPage() {
             })
                 .then(response => response.json())
                 .then(data => {
-                    cats = "&category=" + data.category;
-
-                    fetch(EndPoint + ProductsList +
-                        "?page=" + currPageTemp +
-                        "&page_size=" + perPageTemp +
-                        "&sort_by=" + sortValue +
-                        cats +
-                        prcs +
-                        kondisis)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.data.length > 0) {
-                                setItems(data.data);
-                                setTotalResult(data.total_rows);
-                                if (data.total_rows < perPage) {
-                                    perPageTemp = data.total_rows;
+                    if(data.category){
+                        cats = "&category=" + data.category;
+    
+                        fetch(EndPoint + ProductsList +
+                            "?page=" + currPageTemp +
+                            "&page_size=" + 50 +
+                            "&sort_by=" + sortValue +
+                            cats +
+                            prcs +
+                            kondisis)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.data.length > 0) {
+                                    setItems(data.data);
+                                    setTotalResult(data.total_rows);
+                                    if (data.total_rows < perPage) {
+                                        perPageTemp = data.total_rows;
+                                    }
+                                    setPerPage(perPageTemp);
+                                    setCurrResult(perPageTemp * currPageTemp);
                                 }
-                                setPerPage(perPageTemp);
-                                setCurrResult(perPageTemp * currPageTemp);
-                            }
-                            //setCategoryOptions(data.data)
-                        });
+                                //setCategoryOptions(data.data)
+                            });
+                    }
                 });
         }
 
 
-    }, [router]);
+    }, [router.query]);
 
     const onShowSizeChangeHandler = (currentPage, pageSize) => {
         setPerPage(pageSize);
