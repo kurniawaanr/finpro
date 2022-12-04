@@ -109,7 +109,7 @@ function PublicNavbar(e) {
     onChange(info) {
       const { status } = info.file;
 
-      if (status === 'done') {
+      if (status === 'uploading') {
         message.success(`${info.file.name} file uploaded successfully.`);
 
 
